@@ -1,0 +1,62 @@
+<div class="page-container home-background">
+  <!-- Capas de estrellas animadas -->
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <!-- Botón para controlar música -->
+  <div class="audio-controls">
+    <button class="music-toggle" (click)="toggleMusic()">
+      {{ isPlaying ? '🔊' : '🔇' }}
+    </button>
+    <div class="volume-control">
+      <input type="range" min="0" max="1" step="0.01" [(ngModel)]="volume" (input)="adjustVolume()" />
+    </div>
+  </div>
+
+  <div class="daily-container">
+    <div class="header">
+      <h2>Entrenamiento Diario</h2>
+      <span class="timer">Reinicio en: {{ timer }}</span>
+    </div>
+
+    <!-- Barra de progreso con cofres -->
+    <div class="progress-wrapper">
+      <!-- Milestones con cofres arriba -->
+      <div class="progress-milestones">
+        <span *ngFor="let milestone of rewardMilestones" [style.left.%]="(milestone / maxPoints) * 100">
+          <img
+            src="/assets/chest.png"
+            class="chest-icon"
+            [ngClass]="{
+              'active': progress >= milestone && !claimedMilestones.includes(milestone),
+              'claimed': claimedMilestones.includes(milestone)
+            }"
+            (click)="claimReward(milestone)"
+            alt="Cofre"
+          />
+        </span>
+      </div>
+
+      <!-- Barra de fondo y relleno -->
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="(progress / maxPoints) * 100"></div>
+      </div>
+    </div>
+
+    <!-- Lista de tareas -->
+    <!-- Lista de tareas -->
+    <div class="task-grid" #scrollContainer (wheel)="scrollHorizontally($event)">
+      <div class="task-card" *ngFor="let task of tasks">
+        <h3>{{ task.name }} ({{ task.progress }}/{{ task.goal }}) - {{ task.points }} pts</h3>
+        <button
+          [ngClass]="{ 'completed': task.completed, 'in-progress': !task.completed }"
+          (click)="toggleTask(task)"
+        >
+          {{ task.completed ? 'Completado' : 'En progreso' }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

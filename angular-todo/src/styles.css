@@ -1,0 +1,21 @@
+body.dark-mode {
+  background-color: rgba(108, 114, 114, 0.5);
+  color: #000000;
+}
+
+body.dark-mode .todo-container {
+  background-color: rgba(37, 35, 35, 0.5);
+  color: #000000;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+
