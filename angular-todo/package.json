@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
+    "start": "node server.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:angular-todo": "node dist/angular-todo/server/server.mjs"
@@ -47,3 +47,4 @@
     "typescript": "~5.7.2"
   }
 }
+

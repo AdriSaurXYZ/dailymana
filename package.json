@@ -3,5 +3,11 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2"
+  },
+
+  "scripts": {
+    "build": "ng build --configuration=production",
+    "start": "node server.js"
   }
+
 }
