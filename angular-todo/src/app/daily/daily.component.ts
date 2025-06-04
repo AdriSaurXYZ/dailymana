@@ -1,9 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild, Inject} from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from '../services/notification.service';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MusicService } from '../services/music.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'; // Ajusta la ruta si es diferente
+import { MusicService } from '../services/music.service'; // Importa el servicio de música
 
 interface Task {
   name: string;
@@ -30,13 +30,10 @@ export class DiariasComponent implements OnInit {
   claimedMilestones: number[] = [];
   maxPoints: number = 500;
 
-  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
-
   constructor(
     private snackBar: MatSnackBar,
-    private notificationService: NotificationService,
-    public musicService: MusicService,
-    @Inject(DOCUMENT) private document: Document
+    private notificationService: NotificationService,// ✅ Inyectado
+    public musicService: MusicService
   ) {}
 
   hoverSound = new Audio('assets/hover.mp3');
@@ -47,7 +44,7 @@ export class DiariasComponent implements OnInit {
     this.volume = this.musicService.volume;
     this.musicService.setVolume(this.volume);
 
-    this.notificationService.checkAndShowNotifications();
+    this.notificationService.checkAndShowNotifications(); // ✅ Reemplaza toda la lógica de notificación
 
     this.loadClaimedMilestones();
     this.loadTaskCompletion();
@@ -57,6 +54,16 @@ export class DiariasComponent implements OnInit {
 
     setInterval(() => this.updateTimer(), 1000);
   }
+
+  getLastResetDate(): string {
+    const now = new Date();
+    const reset = new Date();
+    reset.setHours(4, 0, 0, 0);
+    if (now < reset) reset.setDate(reset.getDate() - 1);
+    return reset.toISOString().split('T')[0];
+  }
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   ngAfterViewInit(): void {
     if (this.scrollContainer) {
@@ -70,6 +77,7 @@ export class DiariasComponent implements OnInit {
       }, { passive: false });
     }
   }
+
 
   initializeTasks(): void {
     this.tasks = [
@@ -128,6 +136,7 @@ export class DiariasComponent implements OnInit {
     this.calculateProgress();
     this.saveTaskCompletion();
   }
+
 
   calculateProgress(): void {
     this.progress = this.tasks
@@ -225,12 +234,10 @@ export class DiariasComponent implements OnInit {
   }
 
   scrollHorizontally(event: WheelEvent): void {
-    if (typeof this.document !== 'undefined') {
-      const grid = this.document.querySelector('.task-grid');
-      if (grid) {
-        event.preventDefault();
-        grid.scrollLeft += event.deltaY;
-      }
+    const grid = document.querySelector('.task-grid');
+    if (grid) {
+      event.preventDefault();
+      grid.scrollLeft += event.deltaY;
     }
   }
 
@@ -242,4 +249,5 @@ export class DiariasComponent implements OnInit {
   adjustVolume(): void {
     this.musicService.setVolume(this.volume);
   }
+
 }

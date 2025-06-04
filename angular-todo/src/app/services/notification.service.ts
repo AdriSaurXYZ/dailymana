@@ -9,7 +9,7 @@ export class NotificationService {
 
   checkAndShowNotifications(): void {
     this.checkDailyNotifications();
-    this.checkOverdueTasks(); // ✅ Nueva verificación de tareas vencidas
+    this.checkOverdueTasks(); // ✅ Verificación de tareas vencidas
   }
 
   private checkDailyNotifications(): void {
@@ -23,18 +23,29 @@ export class NotificationService {
     const mondayKey = `lastMondayNotification-${email}`;
 
     const lastReset = localStorage.getItem(resetKey);
-    const lastMonday = localStorage.getItem(mondayKey);
-
     if (lastReset !== todayStr) {
       this.showResetNotification();
       localStorage.setItem(resetKey, todayStr);
     }
 
-    const isMonday = now.getDay() === 1;
-    if (isMonday && lastMonday !== todayStr) {
+    // 🔄 Notificación del lunes después de las 4:00 a. m.
+    const lastMondayTimestamp = Number(localStorage.getItem(mondayKey)) || 0;
+    const currentWeekMondayAt4 = this.getThisWeekMondayAt4AM();
+
+    if (now >= currentWeekMondayAt4 && lastMondayTimestamp < currentWeekMondayAt4.getTime()) {
       this.showMondayNotification();
-      localStorage.setItem(mondayKey, todayStr);
+      localStorage.setItem(mondayKey, now.getTime().toString());
     }
+  }
+
+  private getThisWeekMondayAt4AM(): Date {
+    const now = new Date();
+    const day = now.getDay(); // 0 = domingo, 1 = lunes, ..., 6 = sábado
+    const diff = (day + 6) % 7; // transforma lunes en 0
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - diff);
+    monday.setHours(4, 0, 0, 0);
+    return monday;
   }
 
   private checkOverdueTasks(): void {
@@ -47,13 +58,12 @@ export class NotificationService {
         });
 
         if (overdue.length > 0) {
-          this.showOverdueNotification(overdue); // 👈 pasa el array entero
+          this.showOverdueNotification(overdue);
         }
       },
       error: (err) => console.error('Error verificando tareas vencidas:', err)
     });
   }
-
 
   private showOverdueNotification(overdueTasks: any[]): void {
     this.ensureNotificationPermission(() => {
@@ -78,7 +88,6 @@ export class NotificationService {
       };
     });
   }
-
 
   private showResetNotification(): void {
     this.ensureNotificationPermission(() => {
