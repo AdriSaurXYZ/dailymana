@@ -8,6 +8,7 @@ export class NotificationService {
   constructor(private apiService: ApiService) {}
 
   checkAndShowNotifications(): void {
+    console.log('[DEBUG] checkAndShowNotifications iniciado');
     this.checkDailyNotifications();
     this.checkOverdueTasks(); // ✅ Verificación de tareas vencidas
   }
@@ -17,13 +18,21 @@ export class NotificationService {
     const todayStr = now.toDateString();
 
     const email = localStorage.getItem('userEmail');
-    if (!email) return;
+    console.log('[DEBUG] Email:', email);
+
+    if (!email) {
+      console.warn('[DEBUG] No se encontró userEmail en localStorage');
+      return;
+    }
 
     const resetKey = `lastResetNotification-${email}`;
     const mondayKey = `lastMondayNotification-${email}`;
 
     const lastReset = localStorage.getItem(resetKey);
+    console.log('[DEBUG] lastReset:', lastReset, '| hoy:', todayStr);
+
     if (lastReset !== todayStr) {
+      console.log('[DEBUG] Mostrando notificación de reseteo diario');
       this.showResetNotification();
       localStorage.setItem(resetKey, todayStr);
     }
@@ -32,9 +41,16 @@ export class NotificationService {
     const lastMondayTimestamp = Number(localStorage.getItem(mondayKey)) || 0;
     const currentWeekMondayAt4 = this.getThisWeekMondayAt4AM();
 
+    console.log('[DEBUG] Hora actual:', now);
+    console.log('[DEBUG] Lunes 4AM:', currentWeekMondayAt4);
+    console.log('[DEBUG] Último timestamp guardado:', new Date(lastMondayTimestamp));
+
     if (now >= currentWeekMondayAt4 && lastMondayTimestamp < currentWeekMondayAt4.getTime()) {
+      console.log('[DEBUG] Mostrando notificación del lunes');
       this.showMondayNotification();
       localStorage.setItem(mondayKey, now.getTime().toString());
+    } else {
+      console.log('[DEBUG] No se cumplen condiciones para notificación del lunes');
     }
   }
 
@@ -49,6 +65,8 @@ export class NotificationService {
   }
 
   private checkOverdueTasks(): void {
+    console.log('[DEBUG] checkOverdueTasks iniciado');
+
     this.apiService.getTasks().subscribe({
       next: (tasks: any[]) => {
         const now = new Date();
@@ -57,11 +75,13 @@ export class NotificationService {
           return due && due < now && task.status !== 'completed';
         });
 
+        console.log('[DEBUG] Tareas vencidas encontradas:', overdue.length);
+
         if (overdue.length > 0) {
           this.showOverdueNotification(overdue);
         }
       },
-      error: (err) => console.error('Error verificando tareas vencidas:', err)
+      error: (err) => console.error('[DEBUG] Error verificando tareas vencidas:', err)
     });
   }
 
@@ -77,6 +97,8 @@ export class NotificationService {
         body = `Tienes ${overdueTasks.length} tareas que han pasado su fecha límite.`;
       }
 
+      console.log('[DEBUG] Mostrando notificación de tareas vencidas:', body);
+
       const notification = new Notification(title, {
         body,
         icon: 'assets/alerta.png'
@@ -91,6 +113,7 @@ export class NotificationService {
 
   private showResetNotification(): void {
     this.ensureNotificationPermission(() => {
+      console.log('[DEBUG] Mostrando notificación de tareas diarias');
       new Notification('✅ Tareas reiniciadas', {
         body: 'Ya puedes volver a hacer tus tareas diarias.',
         icon: 'assets/daily.webp'
@@ -100,6 +123,7 @@ export class NotificationService {
 
   private showMondayNotification(): void {
     this.ensureNotificationPermission(() => {
+      console.log('[DEBUG] Mostrando notificación de lunes');
       new Notification('🌀 Universos y Jefes reiniciados', {
         body: 'Ya puedes completar el Universo Simulado y los jefes semanales.',
         icon: 'assets/sim.webp'
@@ -108,14 +132,19 @@ export class NotificationService {
   }
 
   private ensureNotificationPermission(callback: () => void): void {
+    console.log('[DEBUG] Estado de permisos de notificación:', Notification.permission);
+
     if (Notification.permission === 'granted') {
       callback();
     } else if (Notification.permission !== 'denied') {
       Notification.requestPermission().then(permission => {
+        console.log('[DEBUG] Permiso de notificación solicitado. Resultado:', permission);
         if (permission === 'granted') {
           callback();
         }
       });
+    } else {
+      console.warn('[DEBUG] Permiso de notificación denegado');
     }
   }
 }
