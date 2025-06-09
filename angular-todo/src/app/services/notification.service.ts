@@ -8,7 +8,6 @@ export class NotificationService {
   constructor(private apiService: ApiService) {}
 
   checkAndShowNotifications(): void {
-    console.log('[DEBUG] checkAndShowNotifications iniciado');
     this.checkDailyNotifications();
     this.checkOverdueTasks(); // ✅ Verificación de tareas vencidas
   }
@@ -18,7 +17,6 @@ export class NotificationService {
     const todayStr = now.toDateString();
 
     const email = localStorage.getItem('userEmail');
-    console.log('[DEBUG] Email:', email);
 
     if (!email) {
       console.warn('[DEBUG] No se encontró userEmail en localStorage');
@@ -29,10 +27,8 @@ export class NotificationService {
     const mondayKey = `lastMondayNotification-${email}`;
 
     const lastReset = localStorage.getItem(resetKey);
-    console.log('[DEBUG] lastReset:', lastReset, '| hoy:', todayStr);
 
     if (lastReset !== todayStr) {
-      console.log('[DEBUG] Mostrando notificación de reseteo diario');
       this.showResetNotification();
       localStorage.setItem(resetKey, todayStr);
     }
@@ -41,12 +37,7 @@ export class NotificationService {
     const lastMondayTimestamp = Number(localStorage.getItem(mondayKey)) || 0;
     const currentWeekMondayAt4 = this.getThisWeekMondayAt4AM();
 
-    console.log('[DEBUG] Hora actual:', now);
-    console.log('[DEBUG] Lunes 4AM:', currentWeekMondayAt4);
-    console.log('[DEBUG] Último timestamp guardado:', new Date(lastMondayTimestamp));
-
     if (now >= currentWeekMondayAt4 && lastMondayTimestamp < currentWeekMondayAt4.getTime()) {
-      console.log('[DEBUG] Mostrando notificación del lunes');
       this.showMondayNotification();
       localStorage.setItem(mondayKey, now.getTime().toString());
     } else {

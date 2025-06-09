@@ -89,7 +89,7 @@ export class TasksComponent implements OnInit {
     const formData = new FormData();
     formData.append('title', this.newTask);
     formData.append('description', this.newDescription);
-    formData.append('categoryName', category);  // ya calculaste 'category' correctamente arriba
+    formData.append('categoryName', category);
     formData.append('start_date', new Date().toISOString());
     formData.append('due_date', new Date(this.newDueDate).toISOString());
     if (this.taskImageFile) {
