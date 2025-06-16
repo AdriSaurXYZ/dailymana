@@ -41,7 +41,10 @@
         [(ngModel)]="email"
         name="email"
         required
+        pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
+        title="Solo se permiten correos de @gmail.com"
       />
+
 
       <label for="password">Contraseña:</label>
       <input
