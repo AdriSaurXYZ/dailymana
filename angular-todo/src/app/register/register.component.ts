@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MusicService } from '../services/music.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   templateUrl: './register.component.html',
-  imports: [
-    FormsModule
-  ],
+  imports: [FormsModule],
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
@@ -26,14 +24,18 @@ export class RegisterComponent implements OnInit {
     public musicService: MusicService
   ) {}
 
-
   ngOnInit(): void {
     this.isPlaying = this.musicService.isPlaying;
     this.volume = this.musicService.volume;
     this.musicService.setVolume(this.volume);
   }
 
-  register(): void {
+  register(form: NgForm): void {
+    if (!form.valid) {
+      alert('Por favor, completa todos los campos correctamente.');
+      return;
+    }
+
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
     if (!gmailRegex.test(this.email)) {
@@ -41,7 +43,12 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const userData = { name: this.name, email: this.email, password: this.password };
+    const userData = {
+      name: this.name,
+      email: this.email,
+      password: this.password
+    };
+
     this.apiService.registerUser(userData).subscribe({
       next: () => {
         alert('Registro exitoso');
@@ -56,8 +63,6 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-
-
 
   toggleMusic(): void {
     this.musicService.toggle();
