@@ -34,9 +34,10 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    // Validación de correo @gmail.com
-    if (!this.email.endsWith('@gmail.com')) {
-      alert('Solo se permiten correos de @gmail.com');
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+    if (!gmailRegex.test(this.email)) {
+      alert('Por favor, ingresa un correo válido que termine en @gmail.com');
       return;
     }
 
@@ -55,6 +56,7 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
+
 
 
   toggleMusic(): void {
