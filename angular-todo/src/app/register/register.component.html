@@ -24,8 +24,8 @@
   <!-- Contenedor del formulario registro -->
   <div class="register-container">
     <h2>Registrarse</h2>
-    <form (ngSubmit)="register()">
-      <label for="name">Nombre de Usuario:</label>
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" novalidate>
+    <label for="name">Nombre de Usuario:</label>
       <input
         type="text"
         id="name"
