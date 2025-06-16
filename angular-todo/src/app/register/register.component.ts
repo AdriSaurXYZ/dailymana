@@ -34,6 +34,12 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
+    // Validación de correo @gmail.com
+    if (!this.email.endsWith('@gmail.com')) {
+      alert('Solo se permiten correos de @gmail.com');
+      return;
+    }
+
     const userData = { name: this.name, email: this.email, password: this.password };
     this.apiService.registerUser(userData).subscribe({
       next: () => {
@@ -49,6 +55,7 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
+
 
   toggleMusic(): void {
     this.musicService.toggle();
