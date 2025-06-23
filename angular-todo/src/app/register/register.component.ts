@@ -37,14 +37,16 @@ export class RegisterComponent implements OnInit {
   }
 
   register(form: NgForm): void {
+    this.checkPasswordStrength();
+
     if (!form.valid || !this.isPasswordStrong) {
       alert('Por favor, completa todos los campos correctamente y usa una contraseña segura.');
       return;
     }
 
     const userData = {
-      name: this.name,
-      email: this.email,
+      name: this.name.trim(),
+      email: this.email.trim(),
       password: this.password
     };
 
@@ -63,6 +65,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+
   checkPasswordStrength(): void {
     const pwd = this.password;
 
@@ -70,15 +73,17 @@ export class RegisterComponent implements OnInit {
     const upperRequirement = /[A-Z]/;
     const lowerRequirement = /[a-z]/;
     const numberRequirement = /\d/;
-    const specialRequirement = /[!@#$%^&*(),.?":{}|<>]/;
+    const specialRequirement = /[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]~`';]/;
 
-    const passed = [
+    const checks = [
       lengthRequirement.test(pwd),
       upperRequirement.test(pwd),
       lowerRequirement.test(pwd),
       numberRequirement.test(pwd),
       specialRequirement.test(pwd)
-    ].filter(Boolean).length;
+    ];
+
+    const passed = checks.filter(Boolean).length;
 
     this.passwordStrength = (passed / 5) * 100;
     this.isPasswordStrong = passed === 5;
@@ -94,6 +99,7 @@ export class RegisterComponent implements OnInit {
       this.passwordStrengthColor = 'limegreen';
     }
   }
+
 
   toggleMusic(): void {
     this.musicService.toggle();
