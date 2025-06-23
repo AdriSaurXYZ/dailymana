@@ -52,8 +52,9 @@
         name="password"
         [(ngModel)]="password"
         required
-        (ngModelChange)="checkPasswordStrength()"
+        (input)="checkPasswordStrength()"
       />
+
 
       <!-- Barra de seguridad y mensaje -->
       <div class="password-strength-container" *ngIf="password">
