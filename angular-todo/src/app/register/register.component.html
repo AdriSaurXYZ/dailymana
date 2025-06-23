@@ -55,10 +55,10 @@
         [(ngModel)]="password"
         name="password"
         required
-        (input)="checkPasswordStrength()"
+        (ngModelChange)="checkPasswordStrength()"
       />
-      <div class="password-strength-container" *ngIf="passwordStrengthMessage">
-        <div class="strength-bar">
+      <div class="password-strength-container">
+      <div class="strength-bar">
           <div class="strength-fill" [ngStyle]="{'width': passwordStrength + '%', 'background-color': passwordStrengthColor}"></div>
         </div>
         <div class="strength-text" [ngStyle]="{'color': passwordStrengthColor}">

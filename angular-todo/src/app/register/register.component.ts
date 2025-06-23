@@ -80,6 +80,7 @@ export class RegisterComponent implements OnInit {
   }
 
   checkPasswordStrength(): void {
+    console.log('Evaluando fuerza de contraseña: ', this.password); // ← Añade esto
     const pwd = this.password;
 
     const lengthRequirement = /.{8,}/;
