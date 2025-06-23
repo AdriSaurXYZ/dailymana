@@ -21,11 +21,11 @@
     </div>
   </div>
 
-  <!-- Contenedor del formulario registro -->
+  <!-- Formulario de registro -->
   <div class="register-container">
     <h2>Registrarse</h2>
     <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" novalidate>
-    <label for="name">Nombre de Usuario:</label>
+      <label for="name">Nombre de Usuario:</label>
       <input
         type="text"
         id="name"
@@ -45,28 +45,39 @@
         title="Por favor, introduce un correo electrónico válido"
       />
 
-
-
-
       <label for="password">Contraseña:</label>
       <input
         type="password"
         id="password"
-        [(ngModel)]="password"
         name="password"
+        [(ngModel)]="password"
         required
         (ngModelChange)="checkPasswordStrength()"
       />
-      <div class="password-strength-container">
-      <div class="strength-bar">
-          <div class="strength-fill" [ngStyle]="{'width': passwordStrength + '%', 'background-color': passwordStrengthColor}"></div>
+
+      <!-- Barra de seguridad y mensaje -->
+      <div class="password-strength-container" *ngIf="password">
+        <div class="strength-bar">
+          <div
+            class="strength-fill"
+            [ngStyle]="{
+              width: passwordStrength + '%',
+              backgroundColor: passwordStrengthColor
+            }"
+          ></div>
         </div>
-        <div class="strength-text" [ngStyle]="{'color': passwordStrengthColor}">
+        <div
+          class="strength-text"
+          [ngStyle]="{ color: passwordStrengthColor }"
+        >
           {{ passwordStrengthMessage }}
         </div>
       </div>
 
-
+      <!-- Advertencia si la contraseña no es fuerte -->
+      <div *ngIf="password && !isPasswordStrong" style="color: red; font-size: 0.9rem; margin-bottom: 10px;">
+        ⚠️ La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.
+      </div>
 
       <button type="submit" class="register-button">Registrarse</button>
     </form>
@@ -74,4 +85,4 @@
     <p>¿Ya tienes una cuenta?</p>
     <button (click)="goToLogin()" class="login-button">Iniciar Sesión</button>
   </div>
-</div> <!-- CIERRAS AQUÍ correctamente el container -->
+</div>

@@ -13,15 +13,16 @@ import { NgStyle } from '@angular/common';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  name: string = '';
-  email: string = '';
-  password: string = '';
+  name = '';
+  email = '';
+  password = '';
   isPlaying = false;
   volume = 0.4;
 
-  passwordStrengthMessage: string = '';
-  passwordStrengthColor: string = 'red';
-  passwordStrength: number = 0;
+  passwordStrengthMessage = '';
+  passwordStrengthColor = 'red';
+  passwordStrength = 0;
+  isPasswordStrong = false;
 
   constructor(
     private apiService: ApiService,
@@ -41,20 +42,8 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(this.email)) {
-      alert('Por favor, ingresa un correo electrónico válido.');
-      return;
-    }
-
-    const strongPassword = /.{8,}/.test(this.password) &&
-      /[A-Z]/.test(this.password) &&
-      /[a-z]/.test(this.password) &&
-      /\d/.test(this.password) &&
-      /[!@#$%^&*(),.?":{}|<>]/.test(this.password);
-
-    if (!strongPassword) {
-      alert('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.');
+    if (!this.isPasswordStrong) {
+      alert('La contraseña no cumple con los requisitos mínimos de seguridad.');
       return;
     }
 
@@ -80,7 +69,6 @@ export class RegisterComponent implements OnInit {
   }
 
   checkPasswordStrength(): void {
-    console.log('Evaluando fuerza de contraseña: ', this.password); // ← Añade esto
     const pwd = this.password;
 
     const lengthRequirement = /.{8,}/;
@@ -98,6 +86,8 @@ export class RegisterComponent implements OnInit {
     ].filter(Boolean).length;
 
     this.passwordStrength = (passed / 5) * 100;
+
+    this.isPasswordStrong = passed === 5;
 
     if (passed <= 2) {
       this.passwordStrengthMessage = 'Débil';
