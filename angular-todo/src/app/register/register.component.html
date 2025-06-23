@@ -57,9 +57,15 @@
         required
         (input)="checkPasswordStrength()"
       />
-      <div *ngIf="passwordStrengthMessage" [ngStyle]="{'color': passwordStrengthColor}">
-        {{ passwordStrengthMessage }}
+      <div class="password-strength-container" *ngIf="passwordStrengthMessage">
+        <div class="strength-bar">
+          <div class="strength-fill" [ngStyle]="{'width': passwordStrength + '%', 'background-color': passwordStrengthColor}"></div>
+        </div>
+        <div class="strength-text" [ngStyle]="{'color': passwordStrengthColor}">
+          {{ passwordStrengthMessage }}
+        </div>
       </div>
+
 
 
       <button type="submit" class="register-button">Registrarse</button>

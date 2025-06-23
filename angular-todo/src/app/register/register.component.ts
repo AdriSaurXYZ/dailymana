@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MusicService } from '../services/music.service';
-import {NgStyle} from '@angular/common';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +18,10 @@ export class RegisterComponent implements OnInit {
   password: string = '';
   isPlaying = false;
   volume = 0.4;
+
+  passwordStrengthMessage: string = '';
+  passwordStrengthColor: string = 'red';
+  passwordStrength: number = 0;
 
   constructor(
     private apiService: ApiService,
@@ -41,20 +45,18 @@ export class RegisterComponent implements OnInit {
     if (!emailRegex.test(this.email)) {
       alert('Por favor, ingresa un correo electrónico válido.');
       return;
-
-      const strongPassword = /.{8,}/.test(this.password) &&
-        /[A-Z]/.test(this.password) &&
-        /[a-z]/.test(this.password) &&
-        /\d/.test(this.password) &&
-        /[!@#$%^&*(),.?":{}|<>]/.test(this.password);
-
-      if (!strongPassword) {
-        alert('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.');
-        return;
-      }
-
     }
 
+    const strongPassword = /.{8,}/.test(this.password) &&
+      /[A-Z]/.test(this.password) &&
+      /[a-z]/.test(this.password) &&
+      /\d/.test(this.password) &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(this.password);
+
+    if (!strongPassword) {
+      alert('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.');
+      return;
+    }
 
     const userData = {
       name: this.name,
@@ -77,9 +79,6 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  passwordStrengthMessage: string = '';
-  passwordStrengthColor: string = 'red';
-
   checkPasswordStrength(): void {
     const pwd = this.password;
 
@@ -97,18 +96,19 @@ export class RegisterComponent implements OnInit {
       specialRequirement.test(pwd)
     ].filter(Boolean).length;
 
+    this.passwordStrength = (passed / 5) * 100;
+
     if (passed <= 2) {
-      this.passwordStrengthMessage = 'Contraseña débil';
+      this.passwordStrengthMessage = 'Débil';
       this.passwordStrengthColor = 'red';
     } else if (passed === 3 || passed === 4) {
-      this.passwordStrengthMessage = 'Contraseña media';
+      this.passwordStrengthMessage = 'Media';
       this.passwordStrengthColor = 'orange';
     } else {
-      this.passwordStrengthMessage = 'Contraseña fuerte';
+      this.passwordStrengthMessage = 'Fuerte';
       this.passwordStrengthColor = 'limegreen';
     }
   }
-
 
   toggleMusic(): void {
     this.musicService.toggle();
