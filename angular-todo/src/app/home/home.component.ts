@@ -62,4 +62,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   goToLogin(): void {
     this.router.navigate(['/login']);
   }
+
+  nextTrack(): void {
+    this.musicService.nextTrack();
+  }
+
 }
