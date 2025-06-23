@@ -88,8 +88,6 @@ export class NotificationService {
         body = `Tienes ${overdueTasks.length} tareas que han pasado su fecha límite.`;
       }
 
-      console.log('[DEBUG] Mostrando notificación de tareas vencidas:', body);
-
       const notification = new Notification(title, {
         body,
         icon: 'assets/alerta.png'

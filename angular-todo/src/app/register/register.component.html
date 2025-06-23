@@ -36,14 +36,15 @@
 
       <label for="email">Correo electrónico:</label>
       <input
-        type="text"
+        type="email"
         id="email"
         [(ngModel)]="email"
         name="email"
         required
-        pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
-        title="Solo se permiten correos de @gmail.com"
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        title="Por favor, introduce un correo electrónico válido"
       />
+
 
 
 
@@ -54,7 +55,12 @@
         [(ngModel)]="password"
         name="password"
         required
+        (input)="checkPasswordStrength()"
       />
+      <div *ngIf="passwordStrengthMessage" [ngStyle]="{'color': passwordStrengthColor}">
+        {{ passwordStrengthMessage }}
+      </div>
+
 
       <button type="submit" class="register-button">Registrarse</button>
     </form>
