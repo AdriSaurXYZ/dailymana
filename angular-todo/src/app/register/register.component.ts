@@ -9,8 +9,8 @@ import { NgStyle } from '@angular/common';
   selector: 'app-register',
   standalone: true,
   templateUrl: './register.component.html',
-  imports: [FormsModule, NgStyle],
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  imports: [FormsModule, NgStyle]
 })
 export class RegisterComponent implements OnInit {
   name = '';
@@ -37,13 +37,8 @@ export class RegisterComponent implements OnInit {
   }
 
   register(form: NgForm): void {
-    if (!form.valid) {
-      alert('Por favor, completa todos los campos correctamente.');
-      return;
-    }
-
-    if (!this.isPasswordStrong) {
-      alert('La contraseña no cumple con los requisitos mínimos de seguridad.');
+    if (!form.valid || !this.isPasswordStrong) {
+      alert('Por favor, completa todos los campos correctamente y usa una contraseña segura.');
       return;
     }
 
@@ -86,13 +81,12 @@ export class RegisterComponent implements OnInit {
     ].filter(Boolean).length;
 
     this.passwordStrength = (passed / 5) * 100;
-
     this.isPasswordStrong = passed === 5;
 
     if (passed <= 2) {
       this.passwordStrengthMessage = 'Débil';
       this.passwordStrengthColor = 'red';
-    } else if (passed === 3 || passed === 4) {
+    } else if (passed <= 4) {
       this.passwordStrengthMessage = 'Media';
       this.passwordStrengthColor = 'orange';
     } else {
