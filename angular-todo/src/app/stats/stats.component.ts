@@ -21,7 +21,12 @@ export class StatsComponent implements OnInit {
       console.error('No se pudo obtener el ID del usuario.');
       return;
     }
+
     const userId = Number(userIdStr);
+    if (isNaN(userId) || userId <= 0) {
+      console.error('El ID del usuario no es válido:', userIdStr);
+      return;
+    }
 
     // Obtener lista de días
     this.statsService.get500PointsDays(userId).subscribe({
