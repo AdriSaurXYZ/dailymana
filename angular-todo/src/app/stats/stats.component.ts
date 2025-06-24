@@ -20,7 +20,7 @@ export class StatsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userId = this.apiService.getUserIdFromToken(); // O puedes usar localStorage.getItem('userId')
+    const userId = this.apiService.getUserIdFromToken(); // O usa localStorage
     if (!userId || isNaN(userId) || userId <= 0) {
       console.error('El ID del usuario no es válido:', userId);
       return;
