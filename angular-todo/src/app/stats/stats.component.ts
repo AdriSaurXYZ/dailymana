@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatsService } from '../services/stat.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-stats',
@@ -13,18 +14,15 @@ export class StatsComponent implements OnInit {
   days: { fecha: string }[] = [];
   totalCount: number = 0;
 
-  constructor(private statsService: StatsService) {}
+  constructor(
+    private statsService: StatsService,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit() {
-    const userIdStr = localStorage.getItem('userId');
-    if (!userIdStr) {
-      console.error('No se pudo obtener el ID del usuario.');
-      return;
-    }
-
-    const userId = Number(userIdStr);
-    if (isNaN(userId) || userId <= 0) {
-      console.error('El ID del usuario no es válido:', userIdStr);
+    const userId = this.apiService.getUserIdFromToken();
+    if (!userId || isNaN(userId) || userId <= 0) {
+      console.error('El ID del usuario no es válido:', userId);
       return;
     }
 

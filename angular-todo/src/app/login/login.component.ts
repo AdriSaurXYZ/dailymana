@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.apiService.loginUser({ email: this.email, password: this.password }).subscribe({
       next: (response) => {
+        console.log('Respuesta login:', response); // <--- Añade esto para depurar
         localStorage.setItem('userToken', response.token);
 
         // Guarda userId como string explícitamente
