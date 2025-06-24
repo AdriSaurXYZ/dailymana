@@ -20,13 +20,12 @@ export class StatsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userId = this.apiService.getUserIdFromToken();
+    const userId = this.apiService.getUserIdFromToken(); // O puedes usar localStorage.getItem('userId')
     if (!userId || isNaN(userId) || userId <= 0) {
       console.error('El ID del usuario no es válido:', userId);
       return;
     }
 
-    // Obtener lista de días
     this.statsService.get500PointsDays(userId).subscribe({
       next: (data) => {
         this.days = data;
@@ -36,7 +35,6 @@ export class StatsComponent implements OnInit {
       }
     });
 
-    // Obtener el contador total
     this.statsService.get500PointsCount(userId).subscribe({
       next: (data) => {
         this.totalCount = data.total;
