@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from '../services/notification.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'; // Ajusta la ruta si es diferente
 import { MusicService } from '../services/music.service'; // Importa el servicio de música
+import { StatsService } from '../services/stat.service';
 
 interface Task {
   name: string;
@@ -33,7 +34,8 @@ export class DiariasComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private notificationService: NotificationService,// ✅ Inyectado
-    public musicService: MusicService
+    public musicService: MusicService,
+  private statsService: StatsService
   ) {}
 
   hoverSound = new Audio('assets/hover.mp3');
@@ -137,11 +139,30 @@ export class DiariasComponent implements OnInit {
     this.saveTaskCompletion();
   }
 
+  private hasLogged500Today = false;
 
   calculateProgress(): void {
+    const previousProgress = this.progress;
+
     this.progress = this.tasks
       .filter(t => t.completed)
       .reduce((sum, task) => sum + task.points, 0);
+
+    // ⚡ Detectar si acaba de alcanzar los 500 puntos
+    if (this.progress >= 500 && previousProgress < 500 && !this.hasLogged500Today) {
+      const userId = parseInt(localStorage.getItem('userId') || '', 10);
+      if (userId) {
+        this.statsService.log500PointsDay(userId).subscribe({
+          next: () => {
+            this.hasLogged500Today = true;
+            console.log('✅ Día con 500 puntos registrado en la base de datos.');
+          },
+          error: (err) => {
+            console.error('❌ Error al registrar el día de 500 puntos:', err);
+          }
+        });
+      }
+    }
   }
 
   claimReward(milestone: number): void {

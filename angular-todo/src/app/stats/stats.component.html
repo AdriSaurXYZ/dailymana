@@ -1,0 +1,6 @@
+<h2 class="text-xl font-semibold mb-4">Días con 500+ puntos</h2>
+<ul class="space-y-2">
+  <li *ngFor="let day of days" class="p-2 bg-green-100 rounded">
+    {{ day.fecha }} - {{ day.total_puntos }} puntos
+  </li>
+</ul>
