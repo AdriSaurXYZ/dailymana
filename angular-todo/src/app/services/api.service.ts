@@ -94,4 +94,10 @@ export class ApiService {
     });
   }
 
+  // En api.service.ts
+  get500PointDays(userId: number) {
+    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}/stats/500-points-days`);
+  }
+
+
 }

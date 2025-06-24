@@ -9,6 +9,10 @@
     <p>{{ user.email }}</p>
     <hr />
 
+    <button (click)="router.navigate(['/stats'])" class="dropdown-item">
+      📊 Ver estadísticas
+    </button>
+
     <!-- Botón para cambiar imagen -->
     <button (click)="togglePhotoSelector()">Cambiar imagen</button>
 
