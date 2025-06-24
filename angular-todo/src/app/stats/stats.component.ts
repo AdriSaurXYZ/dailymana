@@ -1,32 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../services/api.service';
+import { StatsService } from '../services/stat.service';
 
 @Component({
   selector: 'app-stats',
-  standalone: true, // ✅ Hace que el componente sea independiente
-  imports: [CommonModule], // ✅ Necesario para usar *ngFor, *ngIf, etc.
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.css']
 })
 export class StatsComponent implements OnInit {
-  days: { fecha: string, total_puntos: number }[] = [];
+  days: { fecha: string }[] = [];
+  totalCount: number = 0;
 
-  constructor(private api: ApiService) {}
+  constructor(private statsService: StatsService) {}
 
   ngOnInit() {
-    const userId = this.api.getUserIdFromToken();
-    if (!userId) {
-      console.error('No se pudo obtener el ID del usuario desde el token.');
+    const userIdStr = localStorage.getItem('userId');
+    if (!userIdStr) {
+      console.error('No se pudo obtener el ID del usuario.');
       return;
     }
+    const userId = Number(userIdStr);
 
-    this.api.get500PointDays(userId).subscribe({
+    // Obtener lista de días
+    this.statsService.get500PointsDays(userId).subscribe({
       next: (data) => {
         this.days = data;
       },
       error: (err) => {
         console.error('Error al cargar los días con 500+ puntos:', err);
+      }
+    });
+
+    // Obtener el contador total
+    this.statsService.get500PointsCount(userId).subscribe({
+      next: (data) => {
+        this.totalCount = data.total;
+      },
+      error: (err) => {
+        console.error('Error al obtener el contador total:', err);
       }
     });
   }
