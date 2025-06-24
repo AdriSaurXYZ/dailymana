@@ -21,7 +21,7 @@ export class HomeMenuComponent implements OnInit {
   isPlaying: boolean = true;
 
   constructor(
-    private router: Router,
+    public router: Router,
     public musicService: MusicService,
     private http: HttpClient,
     private notificationService: NotificationService

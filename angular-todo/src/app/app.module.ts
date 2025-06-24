@@ -3,15 +3,15 @@ import { AppComponent } from './app.component';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { HttpClientModule } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations'; // Requerido por Angular Material
+import { StatsComponent } from './stats/stats.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(), // Proveedor de HttpClient
-    importProvidersFrom(MatSnackBarModule),// Proveedor de MatSnackBarModule
-    HttpClientModule,
+    provideHttpClient(),             // ✅ Ya provee HttpClient
+    provideAnimations()              // ✅ Necesario para Angular Material (como MatSnackBar)
   ]
+
+
 }).catch(err => console.error(err));

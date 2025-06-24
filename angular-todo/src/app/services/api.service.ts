@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {catchError, Observable, throwError} from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { TodoItem } from '../tasks/tasks.component';
 
 @Injectable({
@@ -8,7 +8,6 @@ import { TodoItem } from '../tasks/tasks.component';
 })
 export class ApiService {
   private baseUrl = 'https://backend-production-a22a.up.railway.app/api';
-
 
   constructor(private http: HttpClient) {}
 
@@ -19,17 +18,15 @@ export class ApiService {
     });
   }
 
-  // Obtener todas las tareas con sus categorías
   getTasks(): Observable<any> {
     return this.http.get(`${this.baseUrl}/tasks`, {
       headers: this.getAuthHeaders(),
     });
   }
 
-  // Agregar una nueva tarea con su categoría
   addTask(taskData: FormData): Observable<TodoItem> {
     return this.http.post<TodoItem>(`${this.baseUrl}/tasks`, taskData, {
-      headers: this.getAuthHeaders() // ✅ usar directamente el objeto HttpHeaders
+      headers: this.getAuthHeaders()
     }).pipe(
       catchError((error) => {
         console.error('Error al crear la tarea:', error);
@@ -38,28 +35,22 @@ export class ApiService {
     );
   }
 
-
-
-  // Obtener todas las categorías del usuario
   getCategories(): Observable<any> {
     return this.http.get(`${this.baseUrl}/categories`, {
       headers: this.getAuthHeaders(),
     });
   }
 
-  // Crear una nueva categoría
   addCategory(categoryName: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/categories`, { name: categoryName }, {
       headers: this.getAuthHeaders(),
     });
   }
 
-  // Iniciar sesión del usuario
   loginUser(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/users/login`, credentials);
   }
 
-  // Registrar un nuevo usuario
   registerUser(userData: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/users/register`, userData);
   }
@@ -83,8 +74,6 @@ export class ApiService {
     });
   }
 
-
-// PUT /tasks/:id
   updateTask(task: { id: number; title: string; description: string }): Observable<any> {
     return this.http.put(`${this.baseUrl}/tasks/${task.id}`, {
       title: task.title,
@@ -94,10 +83,24 @@ export class ApiService {
     });
   }
 
-  // En api.service.ts
-  get500PointDays(userId: number) {
-    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}/stats/500-points-days`);
+  // ✅ Nuevo método corregido
+  get500PointDays(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/user/${userId}/stats/500-points-days`, {
+      headers: this.getAuthHeaders()
+    });
   }
 
+  getUserIdFromToken(): number | null {
+    const token = localStorage.getItem('userToken');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.userId || payload.id || null;
+    } catch (e) {
+      console.error('Token inválido:', e);
+      return null;
+    }
+  }
 
 }
