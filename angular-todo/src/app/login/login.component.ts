@@ -37,8 +37,15 @@ export class LoginComponent implements OnInit {
     this.apiService.loginUser({ email: this.email, password: this.password }).subscribe({
       next: (response) => {
         localStorage.setItem('userToken', response.token);
-        localStorage.setItem('userId', response.userId);  // <- guarda el userId aquí
-        localStorage.setItem('userEmail', this.email); // <- AÑADIDO
+
+        // Guarda userId como string explícitamente
+        if (response.userId !== undefined && response.userId !== null) {
+          localStorage.setItem('userId', response.userId.toString());
+        } else {
+          console.warn('Respuesta de login sin userId:', response);
+        }
+
+        localStorage.setItem('userEmail', this.email);
         this.router.navigate(['/home']);
       },
       error: (err) => {
@@ -46,6 +53,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
 
 
   toggleMusic(): void {
