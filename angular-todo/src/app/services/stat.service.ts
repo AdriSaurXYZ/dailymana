@@ -17,11 +17,12 @@ export class StatsService {
     });
   }
 
-  log500PointsDay(userId: number): Observable<any> {
-    return this.http.post(`${this.API_URL}/stats/500-points-log`, { userId }, {
-      headers: this.getAuthHeaders()
+  log500PointsDay(usuarioId: number) {
+    return this.http.post(`${this.API_URL}/stats/500-points-log`, {
+      usuario_id: usuarioId
     });
   }
+
 
   get500PointsDays(userId: number): Observable<{ fecha: string }[]> {
     return this.http.get<{ fecha: string }[]>(`${this.API_URL}/user/${userId}/stats/500-points-days`, {
