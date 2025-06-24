@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { DiariasComponent } from './daily/daily.component';
 import {HomeMenuComponent} from './homeMenu/home-menu.component';  // Importa el componente
 import { CharactersComponent } from './characters/characters.component';
+import { StatsComponent } from './stats/stats.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,4 +16,5 @@ export const routes: Routes = [
   { path: 'diarias', component: DiariasComponent },  // Nueva ruta para tareas diarias
   {path: 'home', component: HomeMenuComponent}, // Ruta para la pantalla de inicio
   { path: 'glosario', component: CharactersComponent },
+  {path: 'stats', component: StatsComponent},
 ];
