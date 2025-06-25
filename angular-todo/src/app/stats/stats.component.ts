@@ -36,13 +36,14 @@ export class StatsComponent implements OnInit {
     });
 
     this.statsService.get500PointsCount(userId).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         console.log('Respuesta del contador:', data);
-        this.totalCount = data.total;
+        this.totalCount = data.count;
       },
       error: (err) => {
         console.error('Error al obtener el contador total:', err);
       }
     });
+
   }
 }
