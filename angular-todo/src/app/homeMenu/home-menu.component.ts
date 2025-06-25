@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MusicService } from '../services/music.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../services/notification.service';
 
@@ -20,6 +20,28 @@ export class HomeMenuComponent implements OnInit {
   volume: number = 0.5;
   isPlaying: boolean = true;
 
+  // Usuario
+  user = {
+    name: '',
+    email: '',
+    photoUrl: 'assets/default-profile.png'
+  };
+
+  showDropdown: boolean = false;
+  showEditProfile: boolean = false; // Nuevo flag para mostrar el formulario
+
+  // Datos para editar el perfil
+  editData = {
+    name: '',
+    email: '',
+    password: ''
+  };
+
+  // Selección de imagen de personaje
+  characters: any[] = [];
+  showPhotoSelector = false;
+  defaultPhoto = 'assets/default-profile.png';
+
   constructor(
     public router: Router,
     public musicService: MusicService,
@@ -31,20 +53,6 @@ export class HomeMenuComponent implements OnInit {
   hoverSound = new Audio('assets/hover.mp3');
   clickSound = new Audio('assets/click.mp3');
 
-  // Usuario
-  user = {
-    name: '',
-    email: '',
-    photoUrl: 'assets/default-profile.png'
-  };
-
-  showDropdown: boolean = false;
-
-  // Selección de imagen de personaje
-  characters: any[] = [];
-  showPhotoSelector = false;
-  defaultPhoto = 'assets/default-profile.png';
-
   cargarPerfil() {
     this.http.get<any>(`https://backend-production-a22a.up.railway.app/api/users/profile?email=${this.user.email}`)
       .subscribe({
@@ -52,6 +60,9 @@ export class HomeMenuComponent implements OnInit {
           this.user.name = data.name;
           this.user.photoUrl = data.profile_image_url || this.defaultPhoto;
           localStorage.setItem('userPhotoUrl', this.user.photoUrl);
+          // También inicializa los datos de edición
+          this.editData.name = data.name;
+          this.editData.email = data.email;
         },
         error: (err) => {
           console.error('❌ Error al obtener perfil:', err);
@@ -76,7 +87,6 @@ export class HomeMenuComponent implements OnInit {
       this.cargarPerfil();
     }
 
-    // 🔔 Verificar notificaciones al entrar al Home
     this.notificationService.checkAndShowNotifications();
   }
 
@@ -94,6 +104,45 @@ export class HomeMenuComponent implements OnInit {
 
   toggleProfileDropdown(): void {
     this.showDropdown = !this.showDropdown;
+  }
+
+  toggleEditProfile(): void {
+    this.showEditProfile = !this.showEditProfile;
+    // Opcional: al abrir el formulario, asegura cargar los datos actuales
+    if (this.showEditProfile) {
+      this.editData.name = this.user.name;
+      this.editData.email = this.user.email;
+      this.editData.password = '';
+    }
+  }
+
+  updateProfile(): void {
+    // Realiza validaciones necesarias
+    // Si la contraseña está en blanco, se entiende que no la cambiaremos
+    const payload: any = {
+      name: this.editData.name,
+      email: this.editData.email
+    };
+    if ((this.editData.password || '').trim().length > 0) {
+      payload.password = this.editData.password;
+    }
+    // Enviar PATCH al backend para actualizar el perfil del usuario
+    this.http.patch('https://backend-production-a22a.up.railway.app/api/users/profile-update', payload, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }).subscribe({
+      next: (response: any) => {
+        // Actualiza el perfil del usuario
+        this.user.name = response.name;
+        this.user.email = response.email;
+        localStorage.setItem('userEmail', response.email);
+        alert('Perfil actualizado correctamente.');
+        this.toggleEditProfile();
+      },
+      error: (err) => {
+        console.error('❌ Error al actualizar perfil:', err);
+        alert('Error al actualizar perfil.');
+      }
+    });
   }
 
   toggleMusic(): void {
@@ -117,7 +166,6 @@ export class HomeMenuComponent implements OnInit {
 
   togglePhotoSelector() {
     this.showPhotoSelector = !this.showPhotoSelector;
-
     if (this.showPhotoSelector && this.characters.length === 0) {
       this.http.get('https://backend-production-a22a.up.railway.app/api/characters')
         .subscribe({
@@ -134,13 +182,12 @@ export class HomeMenuComponent implements OnInit {
       alert('Usuario no autenticado');
       return;
     }
-
     this.http.patch('https://backend-production-a22a.up.railway.app/api/users/profile-photo', {
       email: this.user.email,
       characterId: characterId
     }).subscribe({
       next: () => {
-        this.cargarPerfil(); // ✅ Refresca la imagen desde el backend
+        this.cargarPerfil();
         this.showPhotoSelector = false;
       },
       error: (err) => {
@@ -156,16 +203,17 @@ export class HomeMenuComponent implements OnInit {
     if (!clickedInside) {
       this.showDropdown = false;
       this.showPhotoSelector = false;
+      this.showEditProfile = false;
     }
   }
 
   onCharacterListWheel(event: WheelEvent) {
     const container = document.querySelector('.lista-personajes');
     if (container) {
-      // Ya no necesitas hacer scroll manual, pero puedes controlar la velocidad si quieres
       event.preventDefault();
       container.scrollTop += event.deltaY;
     }
   }
+
 
 }

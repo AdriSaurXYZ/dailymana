@@ -13,6 +13,31 @@
       📊 Ver estadísticas
     </button>
 
+    <!-- Formulario para editar perfil (se muestra cuando showEditProfile es true) -->
+    <div *ngIf="showEditProfile" class="edit-profile-form">
+      <h3>Editar perfil</h3>
+      <form (ngSubmit)="updateProfile()">
+        <label>
+          Nombre:
+          <input type="text" [(ngModel)]="editData.name" name="name" required>
+        </label>
+        <br />
+        <label>
+          Email:
+          <input type="email" [(ngModel)]="editData.email" name="email" required>
+        </label>
+        <br />
+        <label>
+          Contraseña:
+          <input type="password" [(ngModel)]="editData.password" name="password">
+          <small>(Dejar en blanco para no cambiar)</small>
+        </label>
+        <br />
+        <button type="submit">Guardar cambios</button>
+        <button type="button" (click)="toggleEditProfile()">Cancelar</button>
+      </form>
+    </div>
+
     <!-- Botón para cambiar imagen -->
     <button (click)="togglePhotoSelector()">Cambiar imagen</button>
 
