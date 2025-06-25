@@ -89,6 +89,7 @@ export class HomeMenuComponent implements OnInit {
     }
 
     this.notificationService.checkAndShowNotifications();
+    console.log('📦 Token al iniciar HomeMenu:', localStorage.getItem('userToken'));
   }
 
   navigateTo(route: string) {
@@ -128,7 +129,8 @@ export class HomeMenuComponent implements OnInit {
     }
 
     // ✅ Recupera el token del localStorage
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('userToken');
+
 
     // ✅ Construye los headers con Authorization
     const headers = new HttpHeaders({
