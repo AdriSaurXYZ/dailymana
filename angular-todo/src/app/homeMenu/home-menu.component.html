@@ -13,6 +13,10 @@
       📊 Ver estadísticas
     </button>
 
+    <button (click)="toggleEditProfile()" class="dropdown-item">
+      ✏️ Editar Perfil
+    </button>
+
     <!-- Formulario para editar perfil (se muestra cuando showEditProfile es true) -->
     <div *ngIf="showEditProfile" class="edit-profile-form">
       <h3>Editar perfil</h3>
