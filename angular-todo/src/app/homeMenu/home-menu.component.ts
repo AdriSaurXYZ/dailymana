@@ -136,6 +136,8 @@ export class HomeMenuComponent implements OnInit {
       'Authorization': `Bearer ${token}`
     });
 
+    console.log('🔐 Token usado:', token);
+
     this.http.patch('https://backend-production-a22a.up.railway.app/api/users/profile-update', payload, { headers })
       .subscribe({
         next: (response: any) => {
