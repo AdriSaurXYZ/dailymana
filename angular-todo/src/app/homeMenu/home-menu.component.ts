@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../services/notification.service';
 
+
 @Component({
   standalone: true,
   selector: 'app-home-menu',
@@ -117,32 +118,38 @@ export class HomeMenuComponent implements OnInit {
   }
 
   updateProfile(): void {
-    // Realiza validaciones necesarias
-    // Si la contraseña está en blanco, se entiende que no la cambiaremos
     const payload: any = {
       name: this.editData.name,
       email: this.editData.email
     };
+
     if ((this.editData.password || '').trim().length > 0) {
       payload.password = this.editData.password;
     }
-    // Enviar PATCH al backend para actualizar el perfil del usuario
-    this.http.patch('https://backend-production-a22a.up.railway.app/api/users/profile-update', payload, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    }).subscribe({
-      next: (response: any) => {
-        // Actualiza el perfil del usuario
-        this.user.name = response.name;
-        this.user.email = response.email;
-        localStorage.setItem('userEmail', response.email);
-        alert('Perfil actualizado correctamente.');
-        this.toggleEditProfile();
-      },
-      error: (err) => {
-        console.error('❌ Error al actualizar perfil:', err);
-        alert('Error al actualizar perfil.');
-      }
+
+    // ✅ Recupera el token del localStorage
+    const token = localStorage.getItem('token');
+
+    // ✅ Construye los headers con Authorization
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     });
+
+    this.http.patch('https://backend-production-a22a.up.railway.app/api/users/profile-update', payload, { headers })
+      .subscribe({
+        next: (response: any) => {
+          this.user.name = response.name;
+          this.user.email = response.email;
+          localStorage.setItem('userEmail', response.email);
+          alert('Perfil actualizado correctamente.');
+          this.toggleEditProfile();
+        },
+        error: (err) => {
+          console.error('❌ Error al actualizar perfil:', err);
+          alert('Error al actualizar perfil.');
+        }
+      });
   }
 
   toggleMusic(): void {
