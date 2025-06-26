@@ -2,7 +2,7 @@ import { OnInit, ChangeDetectorRef } from '@angular/core';
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RouterOutlet, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { MusicService } from '../services/music.service'; // Importa el servicio de música
@@ -44,7 +44,9 @@ export class TasksComponent implements OnInit {
   hiddenCategories: boolean[] = [];
   isDarkMode = false;
 
-  constructor(private cdr: ChangeDetectorRef, private router: Router, private apiService: ApiService, public musicService: MusicService) {}
+  constructor(private cdr: ChangeDetectorRef, private router: Router, private apiService: ApiService, public musicService: MusicService,
+              private location: Location
+  ) {}
 
   hoverSound: HTMLAudioElement | null = typeof Audio !== 'undefined' ? new Audio('assets/hover.mp3') : null;
   clickSound: HTMLAudioElement | null = typeof Audio !== 'undefined' ? new Audio('assets/click.mp3') : null;
@@ -383,6 +385,13 @@ export class TasksComponent implements OnInit {
 
   adjustVolume(): void {
     this.musicService.setVolume(this.volume);
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
   }
 
 }

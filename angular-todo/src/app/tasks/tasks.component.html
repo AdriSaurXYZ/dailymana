@@ -14,6 +14,11 @@
   </div>
 </div>
 
+<div class="navigation-buttons">
+  <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
+  <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+</div>
+
 <main class="todo-container">
   <div class="add-task">
     <input [(ngModel)]="newTask" placeholder="Nueva tarea" (keyup.enter)="addTask()" />

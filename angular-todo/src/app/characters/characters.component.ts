@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 
 interface Character {
   id: number;
@@ -54,7 +54,9 @@ export class CharactersComponent implements OnInit {
     gender: ''
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private location: Location) {}
+
+
 
   ngOnInit() {
     this.http.get<Character[]>('https://backend-production-a22a.up.railway.app/api/characters')
@@ -160,6 +162,13 @@ export class CharactersComponent implements OnInit {
       container.scrollLeft += event.deltaY;  // scroll horizontal con rueda
       event.preventDefault();
     }
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
   }
 
 }

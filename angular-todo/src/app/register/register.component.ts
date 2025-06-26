@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MusicService } from '../services/music.service';
-import { NgStyle } from '@angular/common';
+import {Location, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +27,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    public musicService: MusicService
+    public musicService: MusicService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -112,5 +113,12 @@ export class RegisterComponent implements OnInit {
 
   goToLogin(): void {
     this.router.navigate(['/login']);
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import { StatsService } from '../services/stat.service';
 import { ApiService } from '../services/api.service';
 
@@ -16,7 +16,9 @@ export class StatsComponent implements OnInit {
 
   constructor(
     private statsService: StatsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+  private location: Location
+
   ) {}
 
   ngOnInit() {
@@ -45,5 +47,12 @@ export class StatsComponent implements OnInit {
       }
     });
 
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
   }
 }

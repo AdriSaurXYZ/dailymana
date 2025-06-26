@@ -14,6 +14,11 @@
     </div>
   </div>
 
+  <div class="navigation-buttons">
+    <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
+    <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+  </div>
+
   <div class="daily-container">
     <div class="header">
       <h2>Entrenamiento Diario</h2>
@@ -44,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Lista de tareas -->
     <!-- Lista de tareas -->
     <div class="task-grid" #scrollContainer (wheel)="scrollHorizontally($event)">
       <div class="task-card" *ngFor="let task of tasks">

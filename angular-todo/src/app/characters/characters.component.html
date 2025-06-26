@@ -33,6 +33,11 @@
   </select>
 </div>
 
+<div class="navigation-buttons">
+  <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
+  <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+</div>
+
 <div class="container" (wheel)="onScroll($event)">
   <div class="character-list" (wheel)="onCharacterListWheel($event)">
   <div class="character-card"

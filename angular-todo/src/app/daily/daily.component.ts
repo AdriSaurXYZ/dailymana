@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from '../services/notification.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'; // Ajusta la ruta si es diferente
@@ -35,7 +35,8 @@ export class DiariasComponent implements OnInit {
     private snackBar: MatSnackBar,
     private notificationService: NotificationService,// ✅ Inyectado
     public musicService: MusicService,
-  private statsService: StatsService
+  private statsService: StatsService,
+    private location: Location
   ) {}
 
   hoverSound = new Audio('assets/hover.mp3');
@@ -273,6 +274,13 @@ export class DiariasComponent implements OnInit {
 
   adjustVolume(): void {
     this.musicService.setVolume(this.volume);
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
   }
 
 }

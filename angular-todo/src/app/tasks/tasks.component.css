@@ -347,3 +347,32 @@
   background: linear-gradient(to right, #a71d2a, #5c101a);
   box-shadow: 0 0 16px #ff4d4d;
 }
+
+.navigation-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.go-back-btn,
+.go-forward-btn {
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 8px #3dc9ff99;
+  transition: transform 0.2s;
+}
+
+.go-back-btn:hover,
+.go-forward-btn:hover {
+  transform: scale(1.05);
+  background-color: #3dc9ff;
+  color: black;
+}

@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MusicService } from '../services/music.service';  // importa el servicio
+import { MusicService } from '../services/music.service';
+import {Location} from '@angular/common';  // importa el servicio
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private snackBar: MatSnackBar,
-    public musicService: MusicService  // inyecta el servicio
+    public musicService: MusicService,  // inyecta el servicio
+  private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -76,5 +78,12 @@ export class LoginComponent implements OnInit {
 
   goToRegister(): void {
     this.router.navigate(['/register']);
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
   }
 }
