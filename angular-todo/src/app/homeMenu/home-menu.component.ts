@@ -165,21 +165,24 @@ export class HomeMenuComponent implements OnInit {
     this.musicService.setVolume(this.volume);
   }
 
-  hoverSoundEnabled: boolean = true;
-  soundEnabled: boolean = true;
+  // Activado por defecto, pero checkbox sin marcar
+  muteHoverSound: boolean = false;
+  muteClickSound: boolean = false;
+
   playHover() {
-    if (!this.hoverSoundEnabled) {  // ahora se reproduce solo si está desmarcado
+    if (!this.muteHoverSound) {
       const hover = new Audio('assets/hover.mp3');
       hover.play();
     }
   }
 
   playClick() {
-    if (!this.soundEnabled) {  // ahora se reproduce solo si está desmarcado
+    if (!this.muteClickSound) {
       const click = new Audio('assets/click.mp3');
       click.play();
     }
   }
+
 
 
 
