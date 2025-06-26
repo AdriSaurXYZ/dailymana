@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MusicService } from '../services/music.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ];
   currentBackgroundIndex = 0;
 
-  constructor(private router: Router, public musicService: MusicService) {}
+  constructor(private router: Router, public musicService: MusicService, private location: Location) {}
+
 
   ngOnInit(): void {
     this.isPlaying = this.musicService.isPlaying;
@@ -66,5 +68,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   nextTrack(): void {
     this.musicService.nextTrack();
   }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
+  }
+
 
 }

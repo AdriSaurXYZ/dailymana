@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MusicService } from '../services/music.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import { NotificationService } from '../services/notification.service';
 
 
@@ -47,7 +47,8 @@ export class HomeMenuComponent implements OnInit {
     public router: Router,
     public musicService: MusicService,
     private http: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private location: Location
   ) {}
 
   // Audio
@@ -235,6 +236,13 @@ export class HomeMenuComponent implements OnInit {
       event.preventDefault();
       container.scrollTop += event.deltaY;
     }
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goForward() {
+    this.location.forward();
   }
 
 
