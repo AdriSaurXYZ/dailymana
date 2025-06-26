@@ -1,0 +1,75 @@
+<div class="background-image"></div>
+<div class="starfield"></div>
+
+<div class="filters">
+  <select [(ngModel)]="filters.element" (change)="applyFilters()">
+    <option value="">Elemento</option>
+    <option *ngFor="let e of elements">{{ e }}</option>
+  </select>
+
+  <select [(ngModel)]="filters.path" (change)="applyFilters()">
+    <option value="">Vía</option>
+    <option *ngFor="let p of paths">{{ p }}</option>
+  </select>
+
+  <select [(ngModel)]="filters.rarity" (change)="applyFilters()">
+    <option value="">Rareza</option>
+    <option *ngFor="let r of rarities">{{ r }}</option>
+  </select>
+
+  <select [(ngModel)]="filters.affiliation" (change)="applyFilters()">
+    <option value="">Afiliación</option>
+    <option *ngFor="let a of affiliations">{{ a }}</option>
+  </select>
+
+  <select [(ngModel)]="filters.role" (change)="applyFilters()">
+    <option value="">Rol</option>
+    <option *ngFor="let r of roles">{{ r }}</option>
+  </select>
+
+  <select [(ngModel)]="filters.gender" (change)="applyFilters()">
+    <option value="">Género</option>
+    <option *ngFor="let g of genders">{{ g }}</option>
+  </select>
+</div>
+
+<div class="navigation-buttons">
+  <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
+  <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+</div>
+
+<div class="container" (wheel)="onScroll($event)">
+  <div class="character-list" (wheel)="onCharacterListWheel($event)">
+  <div class="character-card"
+         *ngFor="let character of filteredCharacters"
+         (click)="selectCharacter(character)">
+      <div class="summary">
+        <div class="icon-container">
+          <img [src]="character.path_icon_url" class="icon" />
+          <img [src]="character.element_icon_url" class="icon" />
+        </div>
+        <img [src]="character.profile_image_url" class="profile-img" />
+      </div>
+    </div>
+  </div>
+
+  <div class="character-details-container" *ngIf="selectedCharacter">
+    <div class="details-info">
+      <h2 class="character-name">{{ selectedCharacter.name }}</h2>
+      <p><strong>Descripción:</strong> {{ selectedCharacter.description }}</p>
+      <p><strong>Género:</strong> {{ selectedCharacter.gender }}</p>
+      <p><strong>Afiliación:</strong> {{ selectedCharacter.affiliation }}</p>
+      <p><strong>Elemento:</strong> {{ selectedCharacter.element }}</p>
+      <p><strong>Vía:</strong> {{ selectedCharacter.path }}</p>
+      <p><strong>Roles:</strong> {{ selectedCharacter.roles.join(', ') }}</p>
+      <p><strong>Rareza:</strong> {{ selectedCharacter.rarity }}</p>
+      <p><strong>Versión de Origen:</strong> {{ selectedCharacter.relase_version || 'N/A' }}</p>
+      <p><strong>Lanzamiento:</strong> {{ selectedCharacter.release_date | date: 'yyyy-MM-dd' }}</p>
+    </div>
+
+    <div class="details-image">
+      <img [src]="selectedCharacter.full_image_url" class="full-img" />
+    </div>
+  </div>
+</div>
+

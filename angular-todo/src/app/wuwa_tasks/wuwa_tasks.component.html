@@ -1,0 +1,123 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<div class="background-image"></div>
+<div class="starfield"></div>
+
+<!-- Botón para controlar música -->
+<div class="audio-controls">
+  <button class="music-toggle" (click)="toggleMusic()">
+    {{ isPlaying ? '🔊' : '🔇' }}
+  </button>
+  <button class="track-toggle" (click)="nextTrack()">🎵</button>
+  <div class="volume-control">
+    <input
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      [(ngModel)]="volume"
+      (input)="adjustVolume()"
+    />
+  </div>
+</div>
+
+<div class="navigation-buttons">
+  <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
+  <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+</div>
+
+<main class="todo-container">
+  <div class="add-task">
+    <input [(ngModel)]="newTask" placeholder="Nueva tarea" (keyup.enter)="addTask()" />
+    <input [(ngModel)]="newDescription" placeholder="Descripción de la tarea" (keyup.enter)="addTask()" />
+    <input type="datetime-local" [(ngModel)]="newDueDate" placeholder="Fecha límite" />
+
+    <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()" (keydown.enter)="addTask()">
+      <option value="">Seleccionar categoría</option>
+      <option value="new">Crear nueva categoría</option>
+      <option *ngFor="let category of getCategories()" [value]="category">{{ category }}</option>
+    </select>
+
+    <input
+      *ngIf="selectedCategory === 'new'"
+      [(ngModel)]="newCategory"
+      placeholder="Nombre de nueva categoría"
+      (input)="onNewCategoryInput()"
+      (keyup.enter)="addTask()"
+    />
+
+    <div class="image-add-row">
+      <label class="file-upload">
+        Subir imagen
+        <input type="file" (change)="onTaskImageSelected($event)" />
+      </label>
+      <button (click)="addTask()">Agregar</button>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div *ngFor="let category of getCategories(); let i = index"
+       cdkDropList
+       [id]="category"
+       [cdkDropListData]="getTasksByCategory(category)"
+       [cdkDropListConnectedTo]="getCategories()"
+       (cdkDropListDropped)="drop($event)">
+    <div class="category-header">
+      <h3>{{ category }}</h3>
+      <button (click)="deleteCategory(category)" title="Eliminar categoría" style="margin-left: 10px;">
+        🗑️
+      </button>
+      <span class="toggle-arrow" (click)="toggleCategoryVisibility(i)" [class.hidden]="hiddenCategories[i]">
+        &#9660;
+      </span>
+    </div>
+
+    <ul class="task-list" *ngIf="!hiddenCategories[i]">
+      <li *ngFor="let todoItem of getTasksByCategory(category); let j = index"
+          cdkDrag
+          [cdkDragData]="todoItem"
+          [cdkDragDisabled]="todoItem.completed"
+          [ngClass]="{ completed: todoItem.completed }">
+
+        <div class="task-header">
+          <input
+            type="checkbox"
+            [checked]="todoItem.completed"
+            (change)="toggleCompleted(todoItem)"
+          />
+          <span
+            [class.completed]="todoItem.completed"
+            (click)="toggleDescription(todoItem)">
+            {{ todoItem.title }}
+          </span>
+          <button (click)="deleteTask(todoItem.id)">Eliminar</button>
+          <button (click)="startEditTask(todoItem)">Editar</button>
+        </div>
+
+        <div *ngIf="todoItem.showDescription" class="description">
+          {{ todoItem.description }}
+        </div>
+
+        <img *ngIf="todoItem.image_url && !todoItem.completed"
+             [src]="todoItem.image_url"
+             alt="Imagen de tarea"
+             class="task-image" />
+
+        <div *ngIf="editTaskIndex === todoItem.id">
+          <input [(ngModel)]="editTask" placeholder="Editar tarea" />
+          <input [(ngModel)]="editDescription" placeholder="Editar descripción" />
+          <button (click)="saveEditTask()">Guardar</button>
+        </div>
+
+        <div class="task-dates" *ngIf="!todoItem.completed">
+          <p>Creado: {{ todoItem.createdAt | date: 'short' }}</p>
+          <p *ngIf="todoItem.dueDate">Finaliza: {{ todoItem.dueDate | date: 'short' }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <button class="logout-button" (click)="logout()">Cerrar sesión</button>
+</main>

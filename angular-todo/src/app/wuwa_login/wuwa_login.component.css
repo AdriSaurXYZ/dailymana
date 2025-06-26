@@ -1,28 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
-/* Contenedor principal con fondo de imagen */
+/* Fondo principal con imagen y estrellas */
 .page-container.home-background {
+  background: url('/assets/rover.jpg') center center / cover no-repeat fixed;
   min-height: 100vh;
   width: 100%;
-  background-color: black; /* fallback visible */
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   position: relative;
   overflow: hidden;
-  transition: background-image 1s ease-in-out;
-  z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
 }
 
-
-/* Estrellas animadas sobre el fondo */
+/* Capas estrelladas animadas */
 .stars, .stars2, .stars3 {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
 }
@@ -54,66 +51,96 @@
   }
 }
 
-/* Contenido principal sobre estrellas */
-.home-container {
+/* Contenedor del formulario centrado */
+.login-container {
   position: relative;
   z-index: 2;
-  text-align: center;
-  margin-top: 80px;
-  padding: 30px;
-  background: rgba(20, 20, 40, 0.9);
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 30px;
+  background: rgba(20, 20, 40, 0.92);
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(75, 150, 255, 0.4);
-  max-width: 650px;
-  margin-left: auto;
-  margin-right: auto;
   border: 1px solid rgba(100, 200, 255, 0.3);
   backdrop-filter: blur(10px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* centra todo dentro */
 }
 
-.logo {
-  width: 200px;
-  height: auto;
-  margin-bottom: 25px;
-  filter: drop-shadow(0 0 10px #3dc9ff);
+/* Centrado de elementos del formulario */
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-h1 {
-  font-size: 3rem;
+.login-container h2 {
+  font-size: 2.3rem;
   color: #87cefa;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   text-shadow: 0 0 10px #3dc9ff;
 }
 
-.description {
-  font-size: 1.3rem;
-  color: #aaa;
-  margin-bottom: 25px;
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  text-shadow: 0 0 5px #000;
+/* Etiquetas y campos */
+.login-container label {
+  text-align: center; /* centrar el texto de la etiqueta */
+  margin: 10px 0 5px;
+  font-size: 1rem;
+  color: #e0e0ff;
+  width: 100%;
 }
 
-.start-button {
-  padding: 14px 30px;
-  font-size: 1.1rem;
-  font-weight: bold;
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #3dc9ff;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.login-container input:focus {
+  box-shadow: 0 0 10px #3dc9ff;
+}
+
+/* Botones */
+.login-button, .register-button {
+  width: 100%;
   background: linear-gradient(90deg, #3dc9ff, #6a5acd);
   color: white;
   border: none;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(61, 201, 255, 0.6);
   transition: background 0.4s ease, transform 0.2s ease;
+  margin-top: 10px;
 }
 
-.start-button:hover {
+.login-button:hover, .register-button:hover {
   background: linear-gradient(90deg, #6a5acd, #3dc9ff);
   transform: scale(1.05);
 }
 
-/* Contenedor combinado para botón y barra */
+/* Texto informativo */
+.login-container p {
+  margin-top: 20px;
+  color: #aaa;
+  font-size: 1rem;
+  text-shadow: 0 0 5px #000;
+}
+
+/* Controles de audio */
 .audio-controls {
   position: fixed;
   top: 20px;
@@ -124,7 +151,6 @@ h1 {
   gap: 15px;
 }
 
-/* Botón de mute */
 .music-toggle {
   background: rgba(30, 30, 60, 0.8);
   border: 2px solid #3dc9ff;
@@ -142,7 +168,6 @@ h1 {
   transform: scale(1.1);
 }
 
-/* Barra de volumen */
 .volume-control {
   background: rgba(30, 30, 60, 0.8);
   padding: 10px;
@@ -182,12 +207,3 @@ h1 {
   background-color: #3dc9ff;
   color: black;
 }
-
-.login-options {
-  display: flex;
-  flex-direction: column; /* o row para horizontal */
-  gap: 1rem;
-  align-items: center;
-  margin-top: 1.5rem;
-}
-

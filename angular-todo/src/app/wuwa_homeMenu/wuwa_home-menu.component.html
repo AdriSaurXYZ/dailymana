@@ -1,0 +1,104 @@
+<!-- Contenedor de fondo -->
+<div class="background-image"></div>
+<div class="starfield"></div>
+
+<!-- Perfil de usuario con dropdown -->
+<div class="user-profile" (click)="toggleProfileDropdown()" tabindex="0">
+  <img [src]="user.photoUrl" alt="Foto de perfil" class="profile-img" />
+  <div class="dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
+    <p class="user-name">{{ user.name }}</p>
+    <p>{{ user.email }}</p>
+    <hr />
+
+    <button (click)="router.navigate(['/stats'])" class="dropdown-item">
+      📊 Ver estadísticas
+    </button>
+
+    <button (click)="toggleEditProfile()" class="dropdown-item">
+      ✏️ Editar Perfil
+    </button>
+
+    <!-- Formulario para editar perfil -->
+    <div *ngIf="showEditProfile" class="edit-profile-form">
+      <h3>Editar perfil</h3>
+      <form (ngSubmit)="updateProfile()">
+        <label>
+          Nombre:
+          <input type="text" [(ngModel)]="editData.name" name="name" required />
+        </label>
+        <br />
+        <label>
+          Email:
+          <input type="email" [(ngModel)]="editData.email" name="email" required />
+        </label>
+        <br />
+        <label>
+          Contraseña:
+          <input type="password" [(ngModel)]="editData.password" name="password" />
+          <small>(Dejar en blanco para no cambiar)</small>
+        </label>
+        <br />
+        <button type="submit">Guardar cambios</button>
+        <button type="button" (click)="toggleEditProfile()">Cancelar</button>
+      </form>
+    </div>
+
+    <button (click)="togglePhotoSelector()">Cambiar imagen</button>
+
+    <!-- Selector de personajes -->
+    <div *ngIf="showPhotoSelector" class="selector-fotos">
+      <p style="margin-top: 10px;">Elige una imagen:</p>
+      <div class="lista-personajes" (wheel)="onCharacterListWheel($event)">
+        <img
+          *ngFor="let character of characters"
+          [src]="character.profile_image_url"
+          class="miniatura-vertical"
+          (click)="setAsProfileImage(character.id)"
+          [title]="character.name"
+        />
+      </div>
+    </div>
+
+    <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+      <input type="checkbox" [(ngModel)]="muteHoverSound" />
+      Silenciar sonidos de ratón
+    </label>
+
+    <button (click)="logout()">Cerrar sesión</button>
+  </div>
+</div>
+
+<!-- Controles de música -->
+<div class="audio-controls">
+  <button class="music-toggle" (click)="toggleMusic()">
+    {{ isPlaying ? '🔊' : '🔇' }}
+  </button>
+  <button class="track-toggle" (click)="nextTrack()">🎵</button>
+  <div class="volume-control">
+    <input
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      [(ngModel)]="volume"
+      (input)="adjustVolume()"
+    />
+  </div>
+</div>
+
+<!-- Botones de navegación: ya visibles correctamente -->
+<div class="navigation-buttons">
+  <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
+  <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+</div>
+
+<!-- Contenido principal -->
+<div class="home-container">
+  <h1 class="title">Bienvenido, {{ user.name }}</h1>
+
+  <div class="button-grid">
+    <button class="starrail-btn" (click)="navigateTo('diarias')" (mouseenter)="playHover()" (click)="playClick()">Tareas Diarias</button>
+    <button class="starrail-btn" (click)="navigateTo('tasks')" (mouseenter)="playHover()" (click)="playClick()">Tareas Generales</button>
+    <button class="starrail-btn" (click)="navigateTo('glosario')" (mouseenter)="playHover()" (click)="playClick()">Glosario</button>
+  </div>
+</div>

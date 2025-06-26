@@ -65,6 +65,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/login']);
   }
 
+  goToWuwaLogin(): void {
+    this.router.navigate(['/wuwa-login']);
+  }
   nextTrack(): void {
     this.musicService.nextTrack();
   }
