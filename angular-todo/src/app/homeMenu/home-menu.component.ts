@@ -165,8 +165,8 @@ export class HomeMenuComponent implements OnInit {
     this.musicService.setVolume(this.volume);
   }
 
-  hoverSoundEnabled: boolean = false;
-  soundEnabled: boolean = false;
+  hoverSoundEnabled: boolean = true;
+  soundEnabled: boolean = true;
   playHover() {
     if (!this.hoverSoundEnabled) {  // ahora se reproduce solo si está desmarcado
       const hover = new Audio('assets/hover.mp3');
