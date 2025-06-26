@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
-/* Fondo principal con imagen y estrellas */
 .page-container.home-background {
   background: url('/assets/rover.jpg') center center / cover no-repeat fixed;
   min-height: 100vh;
@@ -11,9 +10,10 @@
   justify-content: center;
   align-items: center;
   font-family: 'Orbitron', sans-serif;
+  color: #e0f7ff;
 }
 
-/* Capas estrelladas animadas */
+/* Capas de estrellas - estilo más sutil */
 .stars, .stars2, .stars3 {
   position: absolute;
   top: 0;
@@ -26,95 +26,85 @@
 
 .stars {
   background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-  animation: moveStars 100s linear infinite;
-  opacity: 0.4;
+  animation: moveStars 80s linear infinite;
+  opacity: 0.3;
 }
 
 .stars2 {
-  background-image: url('https://www.transparenttextures.com/patterns/tiny-grid.png');
-  animation: moveStars 150s linear infinite;
-  opacity: 0.2;
+  background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+  animation: moveStars 120s linear infinite;
+  opacity: 0.15;
 }
 
 .stars3 {
-  background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
-  animation: moveStars 200s linear infinite;
-  opacity: 0.1;
+  background-image: url('https://www.transparenttextures.com/patterns/hexellence.png');
+  animation: moveStars 160s linear infinite;
+  opacity: 0.07;
 }
 
 @keyframes moveStars {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -10000px 5000px;
-  }
+  from { background-position: 0 0; }
+  to { background-position: -5000px 2500px; }
 }
 
-/* Contenedor del formulario centrado */
+/* Contenedor principal */
 .login-container {
   position: relative;
   z-index: 2;
   width: 100%;
   max-width: 420px;
   padding: 40px 30px;
-  background: rgba(20, 20, 40, 0.92);
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(75, 150, 255, 0.4);
-  border: 1px solid rgba(100, 200, 255, 0.3);
+  background: rgba(10, 10, 25, 0.92);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(100, 200, 255, 0.3);
+  border: 1px solid rgba(100, 200, 255, 0.2);
   backdrop-filter: blur(10px);
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center; /* centra todo dentro */
-}
-
-/* Centrado de elementos del formulario */
-.login-container form {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 100%;
 }
 
+/* Título */
 .login-container h2 {
-  font-size: 2.3rem;
-  color: #87cefa;
+  font-size: 2.2rem;
+  color: #aeeeff;
   margin-bottom: 25px;
-  text-shadow: 0 0 10px #3dc9ff;
+  text-shadow: 0 0 12px #4cdfff;
 }
 
-/* Etiquetas y campos */
+/* Etiquetas */
 .login-container label {
-  text-align: center; /* centrar el texto de la etiqueta */
   margin: 10px 0 5px;
   font-size: 1rem;
-  color: #e0e0ff;
+  color: #d0e8ff;
   width: 100%;
+  text-align: left;
 }
 
+/* Inputs */
 .login-container input {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
-  border: 1px solid #3dc9ff;
+  border: 1px solid #4cdfff;
   border-radius: 8px;
   font-size: 1rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
   outline: none;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .login-container input:focus {
-  box-shadow: 0 0 10px #3dc9ff;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 8px #4cdfff;
 }
 
 /* Botones */
 .login-button, .register-button {
   width: 100%;
-  background: linear-gradient(90deg, #3dc9ff, #6a5acd);
+  background: linear-gradient(90deg, #00caff, #667aff);
   color: white;
   border: none;
   padding: 14px;
@@ -122,20 +112,20 @@
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(61, 201, 255, 0.6);
+  box-shadow: 0 0 12px rgba(0, 190, 255, 0.6);
   transition: background 0.4s ease, transform 0.2s ease;
   margin-top: 10px;
 }
 
 .login-button:hover, .register-button:hover {
-  background: linear-gradient(90deg, #6a5acd, #3dc9ff);
+  background: linear-gradient(90deg, #667aff, #00caff);
   transform: scale(1.05);
 }
 
 /* Texto informativo */
 .login-container p {
   margin-top: 20px;
-  color: #aaa;
+  color: #99bbdd;
   font-size: 1rem;
   text-shadow: 0 0 5px #000;
 }
@@ -152,15 +142,15 @@
 }
 
 .music-toggle {
-  background: rgba(30, 30, 60, 0.8);
-  border: 2px solid #3dc9ff;
-  color: #3dc9ff;
+  background: rgba(20, 30, 50, 0.8);
+  border: 2px solid #4cdfff;
+  color: #4cdfff;
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem;
   padding: 10px 16px;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 0 12px #3dc9ff88;
+  box-shadow: 0 0 12px #4cdfff88;
   transition: transform 0.2s ease;
 }
 
@@ -169,16 +159,17 @@
 }
 
 .volume-control {
-  background: rgba(30, 30, 60, 0.8);
+  background: rgba(20, 30, 50, 0.8);
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 0 12px #3dc9ff88;
+  box-shadow: 0 0 12px #4cdfff88;
 }
 
 .volume-control input {
   width: 120px;
 }
 
+/* Botones de navegación */
 .navigation-buttons {
   position: fixed;
   bottom: 20px;
@@ -192,18 +183,18 @@
 .go-forward-btn {
   padding: 8px 12px;
   font-size: 16px;
-  background-color: #222;
+  background-color: #111;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 0 8px #3dc9ff99;
-  transition: transform 0.2s;
+  box-shadow: 0 0 10px #4cdfff55;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .go-back-btn:hover,
 .go-forward-btn:hover {
   transform: scale(1.05);
-  background-color: #3dc9ff;
+  background-color: #4cdfff;
   color: black;
 }
