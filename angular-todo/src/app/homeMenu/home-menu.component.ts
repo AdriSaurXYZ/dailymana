@@ -165,15 +165,23 @@ export class HomeMenuComponent implements OnInit {
     this.musicService.setVolume(this.volume);
   }
 
+  hoverSoundEnabled: boolean = true;
+  soundEnabled: boolean = true;
   playHover() {
-    const hover = new Audio('assets/hover.mp3');
-    hover.play();
+    if (this.hoverSoundEnabled) {
+      const hover = new Audio('assets/hover.mp3');
+      hover.play();
+    }
   }
 
+
   playClick() {
-    const click = new Audio('assets/click.mp3');
-    click.play();
+    if (this.soundEnabled) {
+      const click = new Audio('assets/click.mp3');
+      click.play();
+    }
   }
+
 
   togglePhotoSelector() {
     this.showPhotoSelector = !this.showPhotoSelector;

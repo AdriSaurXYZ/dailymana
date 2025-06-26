@@ -57,6 +57,17 @@
       </div>
     </div>
 
+
+    <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+      <input type="checkbox" [(ngModel)]="hoverSoundEnabled" />
+      Silenciar sonido al pasar el ratón
+    </label>
+
+    <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+      <input type="checkbox" [(ngModel)]="soundEnabled" />
+      Silenciar al clickar
+    </label>
+
     <button (click)="logout()">Cerrar sesión</button>
   </div>
 </div>
