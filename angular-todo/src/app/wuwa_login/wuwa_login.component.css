@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
 /* Fondo principal con imagen y estrellas */
-.page-container login-wuwa-background{
+.page-container.login-wuwa-background{
   background: url('/assets/rover.jpg') center center / cover no-repeat fixed;
   min-height: 100vh;
   width: 100%;

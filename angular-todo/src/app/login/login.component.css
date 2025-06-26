@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
 /* Fondo principal con imagen y estrellas */
-.page-container login-hsr-background {
+.page-container.login-hsr-background {
   background: url('/assets/trail.webp') center center / cover no-repeat fixed;
   min-height: 100vh;
   width: 100%;
