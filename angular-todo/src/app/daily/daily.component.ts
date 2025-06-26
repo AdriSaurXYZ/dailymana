@@ -276,6 +276,9 @@ export class DiariasComponent implements OnInit {
     this.musicService.setVolume(this.volume);
   }
 
+  nextTrack(): void {
+    this.musicService.nextTrack();
+  }
   goBack() {
     this.location.back();
   }

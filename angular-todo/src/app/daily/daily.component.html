@@ -4,13 +4,20 @@
   <div class="stars2"></div>
   <div class="stars3"></div>
 
-  <!-- Botón para controlar música -->
   <div class="audio-controls">
     <button class="music-toggle" (click)="toggleMusic()">
       {{ isPlaying ? '🔊' : '🔇' }}
     </button>
+    <button class="track-toggle" (click)="nextTrack()">🎵</button>
     <div class="volume-control">
-      <input type="range" min="0" max="1" step="0.01" [(ngModel)]="volume" (input)="adjustVolume()" />
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        [(ngModel)]="volume"
+        (input)="adjustVolume()"
+      />
     </div>
   </div>
 

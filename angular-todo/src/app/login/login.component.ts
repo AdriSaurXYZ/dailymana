@@ -80,6 +80,9 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/register']);
   }
 
+  nextTrack(): void {
+    this.musicService.nextTrack();
+  }
   goBack() {
     this.location.back();
   }

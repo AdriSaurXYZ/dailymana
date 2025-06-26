@@ -238,6 +238,9 @@ export class HomeMenuComponent implements OnInit {
     }
   }
 
+  nextTrack(): void {
+    this.musicService.nextTrack();
+  }
   goBack() {
     this.location.back();
   }
