@@ -1,3 +1,4 @@
+<!-- Contenedor de fondo -->
 <div class="background-image"></div>
 <div class="starfield"></div>
 
@@ -17,23 +18,23 @@
       ✏️ Editar Perfil
     </button>
 
-    <!-- Formulario para editar perfil (se muestra cuando showEditProfile es true) -->
+    <!-- Formulario para editar perfil -->
     <div *ngIf="showEditProfile" class="edit-profile-form">
       <h3>Editar perfil</h3>
       <form (ngSubmit)="updateProfile()">
         <label>
           Nombre:
-          <input type="text" [(ngModel)]="editData.name" name="name" required>
+          <input type="text" [(ngModel)]="editData.name" name="name" required />
         </label>
         <br />
         <label>
           Email:
-          <input type="email" [(ngModel)]="editData.email" name="email" required>
+          <input type="email" [(ngModel)]="editData.email" name="email" required />
         </label>
         <br />
         <label>
           Contraseña:
-          <input type="password" [(ngModel)]="editData.password" name="password">
+          <input type="password" [(ngModel)]="editData.password" name="password" />
           <small>(Dejar en blanco para no cambiar)</small>
         </label>
         <br />
@@ -42,48 +43,55 @@
       </form>
     </div>
 
-    <!-- Botón para cambiar imagen -->
     <button (click)="togglePhotoSelector()">Cambiar imagen</button>
 
     <!-- Selector de personajes -->
     <div *ngIf="showPhotoSelector" class="selector-fotos">
       <p style="margin-top: 10px;">Elige una imagen:</p>
       <div class="lista-personajes" (wheel)="onCharacterListWheel($event)">
-        <img *ngFor="let character of characters"
-             [src]="character.profile_image_url"
-             class="miniatura-vertical"
-             (click)="setAsProfileImage(character.id)"
-             [title]="character.name">
+        <img
+          *ngFor="let character of characters"
+          [src]="character.profile_image_url"
+          class="miniatura-vertical"
+          (click)="setAsProfileImage(character.id)"
+          [title]="character.name"
+        />
       </div>
     </div>
-
 
     <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
       <input type="checkbox" [(ngModel)]="muteHoverSound" />
       Silenciar sonidos de ratón
     </label>
 
-
     <button (click)="logout()">Cerrar sesión</button>
   </div>
 </div>
 
-<!-- Botón para controlar música -->
+<!-- Controles de música -->
 <div class="audio-controls">
   <button class="music-toggle" (click)="toggleMusic()">
     {{ isPlaying ? '🔊' : '🔇' }}
   </button>
   <div class="volume-control">
-    <input type="range" min="0" max="1" step="0.01" [(ngModel)]="volume" (input)="adjustVolume()" />
+    <input
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      [(ngModel)]="volume"
+      (input)="adjustVolume()"
+    />
   </div>
 </div>
 
-<div style="position: fixed; bottom: 20px; left: 20px; display: flex; gap: 10px;">
-  <button class="go-back-btn"(click)="goBack()">⬅️ Atrás</button>
+<!-- Botones de navegación: ya visibles correctamente -->
+<div class="navigation-buttons">
+  <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
   <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
 </div>
 
-
+<!-- Contenido principal -->
 <div class="home-container">
   <h1 class="title">Bienvenido, {{ user.name }}</h1>
 
