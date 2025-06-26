@@ -168,19 +168,19 @@ export class HomeMenuComponent implements OnInit {
   hoverSoundEnabled: boolean = false;
   soundEnabled: boolean = false;
   playHover() {
-    if (this.hoverSoundEnabled) {
+    if (!this.hoverSoundEnabled) {  // ahora se reproduce solo si está desmarcado
       const hover = new Audio('assets/hover.mp3');
       hover.play();
     }
   }
 
-
   playClick() {
-    if (this.soundEnabled) {
+    if (!this.soundEnabled) {  // ahora se reproduce solo si está desmarcado
       const click = new Audio('assets/click.mp3');
       click.play();
     }
   }
+
 
 
   togglePhotoSelector() {
