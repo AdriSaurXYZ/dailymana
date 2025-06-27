@@ -156,7 +156,7 @@ export class DiariasComponent implements OnInit {
       const userId = userIdStr ? Number(userIdStr) : undefined;
 
       if (userId !== undefined) {
-        this.statsService.log500PointsDay(userId!, 'hsr').subscribe({
+        this.statsService.log500PointsDay(userId, 'hsr').subscribe({
           next: () => {
             this.hasLogged500Today = true;
             console.log('✅ Día con 500 puntos registrado en la base de datos.');
@@ -168,6 +168,7 @@ export class DiariasComponent implements OnInit {
       } else {
         console.error('No hay userId válido para registrar día 500 puntos.');
       }
+
 
     }
   }

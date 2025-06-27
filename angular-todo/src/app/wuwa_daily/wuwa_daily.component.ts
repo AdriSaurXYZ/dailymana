@@ -156,7 +156,7 @@ export class Wuwa_diariasComponent implements OnInit {
       const userId = userIdStr ? Number(userIdStr) : undefined;
 
       if (userId !== undefined) {
-        this.statsService.log500PointsDay(userId!, 'wuwa').subscribe({
+        this.statsService.log500PointsDay(userId, 'wuwa').subscribe({
           next: () => {
             this.hasLogged500Today = true;
             console.log('✅ Día con 500 puntos registrado en la base de datos.');
@@ -168,6 +168,7 @@ export class Wuwa_diariasComponent implements OnInit {
       } else {
         console.error('No hay userId válido para registrar día 500 puntos.');
       }
+
 
     }
   }
