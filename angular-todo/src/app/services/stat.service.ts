@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,19 +19,17 @@ export class StatsService {
     });
   }
 
-  log500PointsDay(usuarioId: number, juego: 'hsr' | 'wuwa') {
-    if (!usuarioId || !juego) {
-      console.error('Usuario o juego inválidos para log500PointsDay');
-      return;
-    }
-
-    return this.http.post(`${this.API_URL}/stats/500-points-log`, {
-      usuario_id: usuarioId,
-      juego: juego
-    }, { headers: this.getAuthHeaders() });
+log500PointsDay(usuarioId: number, juego: 'hsr' | 'wuwa') {
+  if (!usuarioId || !juego) {
+    console.error('Usuario o juego inválidos para log500PointsDay');
+    return throwError(() => new Error('Usuario o juego inválidos'));
   }
 
-
+  return this.http.post(`${this.API_URL}/stats/500-points-log`, {
+    usuario_id: usuarioId,
+    juego: juego
+  }, { headers: this.getAuthHeaders() });
+}
 
 
   get500PointsDays(userId: number, juego: 'hsr' | 'wuwa'): Observable<{ fecha: string }[]> {
