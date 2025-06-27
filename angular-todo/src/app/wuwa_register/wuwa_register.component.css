@@ -10,7 +10,7 @@ body {
 
 /* Fondo principal con imagen y estilos */
 .page-container.home-background {
-  background: url('/assets/reg.webp') center center / cover no-repeat fixed;
+  background: url('/assets/registro.jpg') center center / cover no-repeat fixed;
   min-height: 100vh;
   width: 100%;
   position: relative;

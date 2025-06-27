@@ -8,6 +8,7 @@ import {HomeMenuComponent} from './homeMenu/home-menu.component';  // Importa el
 import { CharactersComponent } from './characters/characters.component';
 import { StatsComponent } from './stats/stats.component';
 import {Wuwa_loginComponent} from './wuwa_login/wuwa_login.component';
+import {Wuwa_registerComponent} from './wuwa_register/wuwa_register.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,4 +20,5 @@ export const routes: Routes = [
   { path: 'glosario', component: CharactersComponent },
   {path: 'stats', component: StatsComponent},
   { path: 'wuwa-login', component: Wuwa_loginComponent },
+  { path: 'wuwa-register', component: Wuwa_registerComponent },
 ];

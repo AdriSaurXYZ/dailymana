@@ -77,7 +77,7 @@ export class Wuwa_loginComponent implements OnInit {
   }
 
   goToRegister(): void {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/wuwa-register']);
   }
 
   nextTrack(): void {
