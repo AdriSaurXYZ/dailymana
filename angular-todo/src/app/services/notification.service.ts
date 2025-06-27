@@ -39,20 +39,35 @@ export class NotificationService {
   }
 
   private checkOverdueTasks(game: 'hsr' | 'wuwa'): void {
-    this.apiService.getTasks().subscribe({
+    const email = localStorage.getItem('userEmail');
+    if (!email) return;
+
+    const now = Date.now();
+    const overdueKey = `lastOverdueNotification-${game}-${email}`;
+    const lastNotified = Number(localStorage.getItem(overdueKey)) || 0;
+    const notifyCooldown = 5 * 60 * 1000; // 5 minutos
+
+    const tasksObservable = game === 'hsr'
+      ? this.apiService.getTasks()
+      : this.apiService.getWuwaTasks();
+
+    tasksObservable.subscribe({
       next: (tasks: any[]) => {
-        const now = new Date();
+        // En WuWa no tienes 'task.game' así que no hace falta filtrar por ese campo
         const overdue = tasks.filter(task =>
-          task.game === game && new Date(task.due_date) < now && task.status !== 'completed'
+          new Date(task.due_date) < new Date() &&
+          task.status !== 'completed'
         );
 
-        if (overdue.length > 0) {
+        if (overdue.length > 0 && (now - lastNotified > notifyCooldown)) {
           this.showOverdueNotification(overdue, game);
+          localStorage.setItem(overdueKey, now.toString());
         }
       },
       error: (err) => console.error('Error verificando tareas vencidas:', err)
     });
   }
+
 
   private showResetNotification(game: 'hsr' | 'wuwa'): void {
     this.ensureNotificationPermission(() => {
@@ -80,7 +95,7 @@ export class NotificationService {
       const message = game === 'hsr'
         ? {
           title: '🌀 Universos y jefes reiniciados',
-          body: 'Ya puedes completar el Universo Simulado y  desfiar a los jefes semanales.',
+          body: 'Ya puedes completar el Universo Simulado y desfiar a los jefes semanales.',
           icon: 'assets/sim.webp'
         }
         : {
