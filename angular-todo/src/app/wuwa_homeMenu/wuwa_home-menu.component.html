@@ -1,5 +1,5 @@
 <!-- Contenedor de fondo -->
-<div class="background-image"></div>
+<div class="wuwa-background-image"></div>
 <div class="starfield"></div>
 
 <!-- Perfil de usuario con dropdown -->
@@ -10,7 +10,7 @@
     <p>{{ user.email }}</p>
     <hr />
 
-    <button (click)="router.navigate(['/stats'])" class="dropdown-item">
+    <button (click)="router.navigate(['/wuwa-stats'])" class="dropdown-item">
       📊 Ver estadísticas
     </button>
 
@@ -97,8 +97,8 @@
   <h1 class="title">Bienvenido, {{ user.name }}</h1>
 
   <div class="button-grid">
-    <button class="starrail-btn" (click)="navigateTo('diarias')" (mouseenter)="playHover()" (click)="playClick()">Tareas Diarias</button>
-    <button class="starrail-btn" (click)="navigateTo('tasks')" (mouseenter)="playHover()" (click)="playClick()">Tareas Generales</button>
-    <button class="starrail-btn" (click)="navigateTo('glosario')" (mouseenter)="playHover()" (click)="playClick()">Glosario</button>
+    <button class="starrail-btn" (click)="navigateTo('wuwa-diarias')" (mouseenter)="playHover()" (click)="playClick()">Tareas Diarias</button>
+    <button class="starrail-btn" (click)="navigateTo('wuwa-tasks')" (mouseenter)="playHover()" (click)="playClick()">Tareas Generales</button>
+    <button class="starrail-btn" (click)="navigateTo('wuwa-glosario')" (mouseenter)="playHover()" (click)="playClick()">Glosario</button>
   </div>
 </div>

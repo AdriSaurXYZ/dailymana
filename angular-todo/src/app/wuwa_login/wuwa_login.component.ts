@@ -49,7 +49,7 @@ export class Wuwa_loginComponent implements OnInit {
         }
 
         localStorage.setItem('userEmail', this.email);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/wuwa-home']);
       },
       error: (err) => {
         this.showError('No se pudo iniciar sesión. Verifica tus credenciales.');

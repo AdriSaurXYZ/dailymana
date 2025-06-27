@@ -21,7 +21,7 @@ interface Task {
   templateUrl: './wuwa_daily.component.html',
   styleUrls: ['./wuwa_daily.component.css'],
 })
-export class DiariasComponent implements OnInit {
+export class Wuwa_diariasComponent implements OnInit {
   volume: number = 0.5;
   isPlaying: boolean = true;
   tasks: Task[] = [];

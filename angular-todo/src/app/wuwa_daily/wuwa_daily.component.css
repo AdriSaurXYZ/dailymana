@@ -10,8 +10,8 @@ body, html {
   font-family: 'Rajdhani', sans-serif;
 }
 
-.page-container.home-background {
-  background: url('/angular-todo/src/assets/hole.jpg') center center / cover no-repeat fixed;
+.page-container.wuwa-home-background {
+  background: url('/assets/insomne.webp') center center / cover no-repeat fixed;
   min-height: 100vh;
   width: 100%;
   position: relative;
