@@ -95,14 +95,14 @@ export class Wuwa_homeMenuComponent implements OnInit {
 
   navigateTo(route: string) {
     if (route === 'logout') {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/wuwa-login']);
     } else {
       this.router.navigate(['/' + route]);
     }
   }
 
   logout() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/wuwa-login']);
   }
 
   toggleProfileDropdown(): void {

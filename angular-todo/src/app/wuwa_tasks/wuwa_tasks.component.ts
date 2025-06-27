@@ -325,7 +325,7 @@ export class Wuwa_tasksComponent implements OnInit {
 
   logout(): void {
     localStorage.removeItem('userToken');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/wuwa-login']);
   }
 
   deleteCategory(category: string): void {
