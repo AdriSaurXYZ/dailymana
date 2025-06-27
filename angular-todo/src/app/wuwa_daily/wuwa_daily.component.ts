@@ -47,7 +47,8 @@ export class Wuwa_diariasComponent implements OnInit {
     this.volume = this.musicService.volume;
     this.musicService.setVolume(this.volume);
 
-    this.notificationService.checkAndShowNotifications(); // ✅ Reemplaza toda la lógica de notificación
+    this.notificationService.checkAndShowNotifications('wuwa');
+
 
     this.loadClaimedMilestones();
     this.loadTaskCompletion();

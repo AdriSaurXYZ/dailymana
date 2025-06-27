@@ -89,7 +89,7 @@ export class Wuwa_homeMenuComponent implements OnInit {
       this.cargarPerfil();
     }
 
-    this.notificationService.checkAndShowNotifications();
+    this.notificationService.checkAndShowNotifications('wuwa');
     console.log('📦 Token al iniciar HomeMenu:', localStorage.getItem('userToken'));
   }
 

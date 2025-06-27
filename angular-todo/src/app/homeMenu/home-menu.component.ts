@@ -89,7 +89,7 @@ export class HomeMenuComponent implements OnInit {
       this.cargarPerfil();
     }
 
-    this.notificationService.checkAndShowNotifications();
+    this.notificationService.checkAndShowNotifications('hsr');
     console.log('📦 Token al iniciar HomeMenu:', localStorage.getItem('userToken'));
   }
 
