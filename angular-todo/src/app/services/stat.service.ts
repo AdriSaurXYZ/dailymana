@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class StatsService {
   private API_URL = 'https://backend-production-a22a.up.railway.app/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('userToken');
@@ -17,22 +18,25 @@ export class StatsService {
     });
   }
 
-  log500PointsDay(usuarioId: number) {
+  log500PointsDay(usuarioId: number, juego: 'hsr' | 'wuwa') {
     return this.http.post(`${this.API_URL}/stats/500-points-log`, {
-      usuario_id: usuarioId
+      usuario_id: usuarioId,
+      juego: juego
     });
   }
 
 
-  get500PointsDays(userId: number): Observable<{ fecha: string }[]> {
-    return this.http.get<{ fecha: string }[]>(`${this.API_URL}/user/${userId}/stats/500-points-days`, {
-      headers: this.getAuthHeaders()
-    });
+  get500PointsDays(userId: number, juego: 'hsr' | 'wuwa'): Observable<{ fecha: string }[]> {
+    return this.http.get<{ fecha: string }[]>(
+      `${this.API_URL}/user/${userId}/stats/500-points-days?juego=${juego}`,
+      {headers: this.getAuthHeaders()}
+    );
   }
 
-  get500PointsCount(userId: number): Observable<{ total: number }> {
-    return this.http.get<{ total: number }>(`${this.API_URL}/user/${userId}/stats/500-points-count`, {
-      headers: this.getAuthHeaders()
-    });
+  get500PointsCount(userId: number, juego: 'hsr' | 'wuwa'): Observable<{ count: number }> {
+    return this.http.get<{ count: number }>(
+      `${this.API_URL}/user/${userId}/stats/500-points-count?juego=${juego}`,
+      {headers: this.getAuthHeaders()}
+    );
   }
 }

@@ -22,32 +22,33 @@ export class Wuwa_statsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userId = this.apiService.getUserIdFromToken(); // O usa localStorage
+    const userId = this.apiService.getUserIdFromToken();
+
     if (!userId || isNaN(userId) || userId <= 0) {
       console.error('El ID del usuario no es válido:', userId);
       return;
     }
 
-    this.statsService.get500PointsDays(userId).subscribe({
+    // Solo para WuWa
+    this.statsService.get500PointsDays(userId, 'wuwa').subscribe({
       next: (data) => {
         this.days = data;
       },
       error: (err) => {
-        console.error('Error al cargar los días con 500+ puntos:', err);
+        console.error('Error al cargar los días con 500+ puntos en WuWa:', err);
       }
     });
 
-    this.statsService.get500PointsCount(userId).subscribe({
+    this.statsService.get500PointsCount(userId, 'wuwa').subscribe({
       next: (data: any) => {
-        console.log('Respuesta del contador:', data);
         this.totalCount = data.count;
       },
       error: (err) => {
-        console.error('Error al obtener el contador total:', err);
+        console.error('Error al obtener el contador total de WuWa:', err);
       }
     });
-
   }
+
 
   goBack() {
     this.location.back();

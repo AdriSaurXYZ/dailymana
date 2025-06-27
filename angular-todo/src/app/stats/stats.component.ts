@@ -22,32 +22,33 @@ export class StatsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userId = this.apiService.getUserIdFromToken(); // O usa localStorage
+    const userId = this.apiService.getUserIdFromToken();
+
     if (!userId || isNaN(userId) || userId <= 0) {
       console.error('El ID del usuario no es válido:', userId);
       return;
     }
 
-    this.statsService.get500PointsDays(userId).subscribe({
+    // Solo para HSR
+    this.statsService.get500PointsDays(userId, 'hsr').subscribe({
       next: (data) => {
         this.days = data;
       },
       error: (err) => {
-        console.error('Error al cargar los días con 500+ puntos:', err);
+        console.error('Error al cargar los días con 500+ puntos en HSR:', err);
       }
     });
 
-    this.statsService.get500PointsCount(userId).subscribe({
+    this.statsService.get500PointsCount(userId, 'hsr').subscribe({
       next: (data: any) => {
-        console.log('Respuesta del contador:', data);
         this.totalCount = data.count;
       },
       error: (err) => {
-        console.error('Error al obtener el contador total:', err);
+        console.error('Error al obtener el contador total de HSR:', err);
       }
     });
-
   }
+
 
   goBack() {
     this.location.back();
