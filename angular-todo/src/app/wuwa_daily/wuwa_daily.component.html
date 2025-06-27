@@ -38,7 +38,7 @@
       <div class="progress-milestones">
         <span *ngFor="let milestone of rewardMilestones" [style.left.%]="(milestone / maxPoints) * 100">
           <img
-            src="/angular-todo/src/assets/chest.png"
+            src="assets/chest.png"
             class="chest-icon"
             [ngClass]="{
               'active': progress >= milestone && !claimedMilestones.includes(milestone),

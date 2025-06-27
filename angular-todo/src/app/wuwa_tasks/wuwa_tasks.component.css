@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
 /* Imagen de fondo base */
-.background-image {
+.wuwa-task-background-image {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/assets/Dream.webp');
+  background-image: url('/assets/firm.webp');
   background-size: cover;
   background-position: center;
   z-index: -3;

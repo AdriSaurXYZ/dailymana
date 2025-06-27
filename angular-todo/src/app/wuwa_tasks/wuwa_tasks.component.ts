@@ -55,7 +55,7 @@ export class Wuwa_tasksComponent implements OnInit {
     this.isPlaying = this.musicService.isPlaying;
     this.volume = this.musicService.volume;
     this.musicService.setVolume(this.volume);
-    this.apiService.getTasks().subscribe((tasks: TodoItem[]) => {
+    this.apiService.getWuwaTasks().subscribe((tasks: TodoItem[]) => {
       tasks.forEach((task: any) => {
         task.category = task.categoryName || 'Sin categoría';
         task.createdAt = new Date(task.start_date);
@@ -98,7 +98,7 @@ export class Wuwa_tasksComponent implements OnInit {
       formData.append('image', this.taskImageFile);
     }
 
-    this.apiService.addTask(formData).subscribe({
+    this.apiService.addWuwaTask(formData).subscribe({
       next: (task: any) => {
         const newTaskObj: TodoItem = {
           id: task.id,
@@ -161,7 +161,7 @@ export class Wuwa_tasksComponent implements OnInit {
       );
 
       // Actualiza categoría en el backend
-      this.apiService.updateTaskCategoryAndOrder(movedTask.id, newCategory).subscribe({
+      this.apiService.updateWuwaTaskCategoryAndOrder(movedTask.id, newCategory).subscribe({
         next: () => console.log('Tarea actualizada correctamente en el backend.'),
         error: err => console.error('Error al actualizar la categoría de la tarea:', err)
       });
@@ -183,7 +183,8 @@ export class Wuwa_tasksComponent implements OnInit {
     task.completed = !task.completed;
     const newStatus = task.completed ? 'completed' : 'pending';
 
-    this.apiService.updateTaskStatus(task.id, task.completed).subscribe({
+    this.apiService.updateWuwaTaskStatus(task.id, task.completed).subscribe({
+
       next: () => {
         if (task.completed && this.editTaskIndex === task.id) {
           this.editTaskIndex = null;
@@ -201,7 +202,7 @@ export class Wuwa_tasksComponent implements OnInit {
   }
 
   deleteTask(id: number): void {
-    this.apiService.deleteTask(id).subscribe({
+    this.apiService.deleteWuwaTask(id).subscribe({
       next: () => {
         for (const category of this.getCategories()) {
           this.todoMap[category] = this.todoMap[category].filter(item => item.id !== id);
@@ -234,7 +235,7 @@ export class Wuwa_tasksComponent implements OnInit {
       description: this.editDescription
     };
 
-    this.apiService.updateTask(taskToUpdate).subscribe({
+    this.apiService.updateWuwaTask(taskToUpdate).subscribe({
       next: () => {
         for (const category of this.getCategories()) {
           const task = this.todoMap[category].find(t => t.id === this.editTaskIndex);
@@ -337,7 +338,7 @@ export class Wuwa_tasksComponent implements OnInit {
     let completedRequests = 0;
 
     tasksToDelete.forEach(task => {
-      this.apiService.deleteTask(task.id).subscribe({
+      this.apiService.deleteWuwaTask(task.id).subscribe({
         next: () => {
           completedRequests++;
           if (completedRequests === tasksToDelete.length) {

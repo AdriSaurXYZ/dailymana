@@ -103,4 +103,52 @@ export class ApiService {
     }
   }
 
+  // === MÉTODOS WUWA TASKS ===
+
+  getWuwaTasks(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/wuwa_tasks`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  addWuwaTask(taskData: FormData): Observable<TodoItem> {
+    return this.http.post<TodoItem>(`${this.baseUrl}/wuwa_tasks`, taskData, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      catchError((error) => {
+        console.error('Error al crear la WUWA tarea:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updateWuwaTaskStatus(id: number, completed: boolean): Observable<any> {
+    const status = completed ? 'completed' : 'pending';
+    return this.http.put(`${this.baseUrl}/wuwa_tasks/${id}/status`, { status }, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  updateWuwaTaskCategoryAndOrder(id: number, newCategory: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/wuwa_tasks/${id}/category`, { category: newCategory }, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  deleteWuwaTask(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/wuwa_tasks/${id}`, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  updateWuwaTask(task: { id: number; title: string; description: string }): Observable<any> {
+    return this.http.put(`${this.baseUrl}/wuwa_tasks/${task.id}`, {
+      title: task.title,
+      description: task.description
+    }, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+
 }
