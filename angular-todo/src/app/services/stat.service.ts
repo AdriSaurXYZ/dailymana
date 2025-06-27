@@ -19,11 +19,18 @@ export class StatsService {
   }
 
   log500PointsDay(usuarioId: number, juego: 'hsr' | 'wuwa') {
+    if (!usuarioId || !juego) {
+      console.error('Usuario o juego inválidos para log500PointsDay');
+      return;
+    }
+
     return this.http.post(`${this.API_URL}/stats/500-points-log`, {
       usuario_id: usuarioId,
       juego: juego
-    });
+    }, { headers: this.getAuthHeaders() });
   }
+
+
 
 
   get500PointsDays(userId: number, juego: 'hsr' | 'wuwa'): Observable<{ fecha: string }[]> {
