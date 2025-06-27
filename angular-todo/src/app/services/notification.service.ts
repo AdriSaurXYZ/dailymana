@@ -43,9 +43,8 @@ export class NotificationService {
       next: (tasks: any[]) => {
         const now = new Date();
         const overdue = tasks.filter(task =>
-          new Date(task.due_date) < now && task.status !== 'completed'
+          task.game === game && new Date(task.due_date) < now && task.status !== 'completed'
         );
-
 
         if (overdue.length > 0) {
           this.showOverdueNotification(overdue, game);
