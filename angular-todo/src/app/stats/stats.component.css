@@ -1,3 +1,149 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+/* Fondo y estrellas */
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/assets/gold.jpg') center center / cover no-repeat fixed;
+  z-index: -3;
+}
+
+.starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.starfield::after {
+  content: '';
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  background-size: contain;
+  animation: starScroll 60s linear infinite;
+  opacity: 0.2;
+}
+
+@keyframes starScroll {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Contenedor principal */
+.stats-container {
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
+  padding: 40px 20px;
+  text-align: center;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  position: relative;
+  z-index: 1;
+}
+
+/* Título */
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: rgba(20, 20, 40, 0.85);
+  color: #87cefa;
+  border-radius: 12px;
+  text-shadow: 0 0 10px #3dc9ff, 0 0 20px #6a5acd;
+  border: 1px solid rgba(100, 200, 255, 0.3);
+  box-shadow: 0 0 15px rgba(75, 150, 255, 0.2);
+}
+
+/* Subtítulo */
+p {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #3dc9ff;
+  margin-bottom: 30px;
+}
+
+/* Lista de días */
+ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+li {
+  background: rgba(20, 40, 20, 0.9);
+  color: #b5ffb5;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 8px rgba(60, 255, 60, 0.3);
+  border: 1px solid rgba(100, 255, 100, 0.2);
+  font-size: 1.1rem;
+}
+
+/* Botones navegación */
+.navigation-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 15px;
+}
+
+.go-back-btn,
+.go-forward-btn {
+  background-color: rgba(20, 20, 40, 0.85);
+  color: #3dc9ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: 2px solid #3dc9ff;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 12px #3dc9ff88;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.go-back-btn:hover,
+.go-forward-btn:hover {
+  transform: scale(1.05);
+  background-color: #3dc9ff;
+  color: black;
+}
+
+/* Animación entrada */
+.stats-container > * {
+  animation: fadeInUp 0.7s ease both;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
 .navigation-buttons {
   position: fixed;
   bottom: 20px;

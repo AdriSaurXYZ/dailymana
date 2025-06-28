@@ -9,7 +9,7 @@
     <button class="music-toggle" (click)="toggleMusic()">
       {{ isPlaying ? '🔊' : '🔇' }}
     </button>
-    <button class="track-toggle" (click)="nextTrack()">🎵</button>
+    <button class="music-toggle" (click)="nextTrack()">🎵</button> <!-- CAMBIO AQUÍ -->
     <div class="volume-control">
       <input
         type="range"
@@ -21,6 +21,7 @@
       />
     </div>
   </div>
+
 
   <!-- Contenido principal -->
   <div class="star-rail-theme-background">
