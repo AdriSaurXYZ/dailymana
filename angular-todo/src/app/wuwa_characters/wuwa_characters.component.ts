@@ -143,10 +143,12 @@ export class Wuwa_charactersComponent implements OnInit {
       (!this.filters.role || c.roles.includes(this.filters.role)) &&
       (!this.filters.rarity || c.rarity === this.filters.rarity) &&
       (!this.filters.affiliation || c.affiliation === this.filters.affiliation) &&
+      (!this.filters.birthplace || c.birthplace === this.filters.birthplace) &&
       (!this.filters.gender || c.gender === this.filters.gender)
     );
     this.visibleStartIndex = 0;
   }
+
 
   onCharacterListWheel(event: WheelEvent) {
     const container = event.currentTarget as HTMLElement;
