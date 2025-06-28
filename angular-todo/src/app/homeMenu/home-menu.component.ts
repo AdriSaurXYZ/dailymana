@@ -56,7 +56,7 @@ export class HomeMenuComponent implements OnInit {
   clickSound = new Audio('assets/click.mp3');
 
   cargarPerfil() {
-    this.http.get<any>(`https://backend-production-a22a.up.railway.app/api/users/profile?email=${this.user.email}`)
+    this.http.get<any>(`https://backend-production-a22a.up.railway.app/api/users/profile?email=${this.user.email}&game=hsr`)
       .subscribe({
         next: (data) => {
           this.user.name = data.name;

@@ -103,6 +103,17 @@ export class ApiService {
     }
   }
 
+  getUserProfile(email: string, game: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/profile`, {
+      headers: this.getAuthHeaders(),
+      params: {
+        email,
+        game
+      }
+    });
+  }
+
+
   // === MÉTODOS WUWA TASKS ===
 
   getWuwaTasks(): Observable<any> {
