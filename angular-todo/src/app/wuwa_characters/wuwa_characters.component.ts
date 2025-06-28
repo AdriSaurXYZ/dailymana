@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {CommonModule, Location} from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 interface Character {
   id: number;
@@ -9,6 +9,7 @@ interface Character {
   gender: string | null;
   birthplace: string | null;
   weapon_type: string | null;
+  weapon_type_url?: string;
   profile_image_url: string;
   full_image_url: string;
   description: string;
@@ -39,24 +40,25 @@ export class Wuwa_charactersComponent implements OnInit {
   userId = 1;
 
   elements: string[] = [];
-  paths: string[] = [];
+  weaponTypes: string[] = [];
   rarities: string[] = [];
   affiliations: string[] = [];
   roles: string[] = [];
   genders: string[] = [];
+  birthplaces: string[] = [];
+
 
   filters = {
     element: '',
-    path: '',
+    weapon_type: '',
     role: '',
     rarity: '',
     affiliation: '',
+    birthplace:'',
     gender: ''
   };
 
   constructor(private http: HttpClient, private location: Location) {}
-
-
 
   ngOnInit() {
     this.http.get<Character[]>('https://backend-production-a22a.up.railway.app/wuwa-characters')
@@ -69,12 +71,12 @@ export class Wuwa_charactersComponent implements OnInit {
 
         this.filteredCharacters = [...this.characters];
 
-        this.elements = [...new Set(this.characters.map(c => c.element))];
-        this.paths = [...new Set(this.characters.map(c => c.path))];
+        this.elements = [...new Set(this.characters.map(c => c.element).filter((e): e is string => e !== null))];
+        this.weaponTypes = [...new Set(this.characters.map(c => c.weapon_type).filter((w): w is string => w !== null))];
         this.rarities = [...new Set(this.characters.map(c => c.rarity))];
-        this.affiliations = [...new Set(this.characters.map(c => c.affiliation))];
+        this.affiliations = [...new Set(this.characters.map(c => c.affiliation).filter((a): a is string => a !== null))];
         this.roles = [...new Set(this.characters.flatMap(c => c.roles))];
-        this.genders = [...new Set(this.characters.map(c => c.gender))];
+        this.genders = [...new Set(this.characters.map(c => c.gender).filter((g): g is string => g !== null))];
 
         this.http.get<{ character_id: number; has_character: boolean; }[]>(
           `https://backend-production-a22a.up.railway.app/api/user-characters/${this.userId}`
@@ -100,23 +102,16 @@ export class Wuwa_charactersComponent implements OnInit {
     }
   }
 
-  // Puedes reemplazar el (wheel) del HTML con este decorador si prefieres
-  // @HostListener('wheel', ['$event'])
   onScroll(event: WheelEvent) {
-    // Evitar que el scroll funcione si estás sobre el contenedor de detalles
     const target = event.target as HTMLElement;
-    if (target.closest('.character-details-container')) {
-      return; // No hacer nada si el scroll viene del panel de detalles
-    }
+    if (target.closest('.character-details-container')) return;
 
     if (event.deltaY > 0) {
       this.visibleStartIndex = (this.visibleStartIndex + 1) % this.filteredCharacters.length;
     } else {
-      this.visibleStartIndex =
-        (this.visibleStartIndex - 1 + this.filteredCharacters.length) % this.filteredCharacters.length;
+      this.visibleStartIndex = (this.visibleStartIndex - 1 + this.filteredCharacters.length) % this.filteredCharacters.length;
     }
   }
-
 
   selectCharacter(character: Character) {
     this.selectedCharacter = character;
@@ -144,22 +139,19 @@ export class Wuwa_charactersComponent implements OnInit {
   applyFilters() {
     this.filteredCharacters = this.characters.filter(c =>
       (!this.filters.element || c.element === this.filters.element) &&
-      (!this.filters.path || c.path === this.filters.path) &&
+      (!this.filters.weapon_type || c.weapon_type === this.filters.weapon_type) &&
       (!this.filters.role || c.roles.includes(this.filters.role)) &&
       (!this.filters.rarity || c.rarity === this.filters.rarity) &&
       (!this.filters.affiliation || c.affiliation === this.filters.affiliation) &&
       (!this.filters.gender || c.gender === this.filters.gender)
     );
-
-    // Resetear scroll al aplicar filtros
     this.visibleStartIndex = 0;
   }
 
-  // En el componente Angular
   onCharacterListWheel(event: WheelEvent) {
     const container = event.currentTarget as HTMLElement;
     if (event.deltaY !== 0) {
-      container.scrollLeft += event.deltaY;  // scroll horizontal con rueda
+      container.scrollLeft += event.deltaY;
       event.preventDefault();
     }
   }
@@ -167,8 +159,8 @@ export class Wuwa_charactersComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
   goForward() {
     this.location.forward();
   }
-
 }

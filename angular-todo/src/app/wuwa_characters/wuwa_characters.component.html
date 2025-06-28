@@ -7,9 +7,9 @@
     <option *ngFor="let e of elements">{{ e }}</option>
   </select>
 
-  <select [(ngModel)]="filters.path" (change)="applyFilters()">
-    <option value="">Vía</option>
-    <option *ngFor="let p of paths">{{ p }}</option>
+  <select [(ngModel)]="filters.weapon_type" (change)="applyFilters()">
+    <option value="">Arma</option>
+    <option *ngFor="let w of weaponTypes">{{ w }}</option>
   </select>
 
   <select [(ngModel)]="filters.rarity" (change)="applyFilters()">
@@ -27,6 +27,12 @@
     <option *ngFor="let r of roles">{{ r }}</option>
   </select>
 
+  <select [(ngModel)]="filters.birthplace" (change)="applyFilters()">
+    <option value="">Lugar de Nacimiento</option>
+    <option *ngFor="let b of birthplaces">{{ b }}</option>
+  </select>
+
+
   <select [(ngModel)]="filters.gender" (change)="applyFilters()">
     <option value="">Género</option>
     <option *ngFor="let g of genders">{{ g }}</option>
@@ -40,12 +46,12 @@
 
 <div class="container" (wheel)="onScroll($event)">
   <div class="character-list" (wheel)="onCharacterListWheel($event)">
-  <div class="character-card"
+    <div class="character-card"
          *ngFor="let character of filteredCharacters"
          (click)="selectCharacter(character)">
       <div class="summary">
         <div class="icon-container">
-          <img [src]="character.path_icon_url" class="icon" />
+          <img [src]="character.weapon_type_url" class="icon" />
           <img [src]="character.element_icon_url" class="icon" />
         </div>
         <img [src]="character.profile_image_url" class="profile-img" />
@@ -60,10 +66,11 @@
       <p><strong>Género:</strong> {{ selectedCharacter.gender }}</p>
       <p><strong>Afiliación:</strong> {{ selectedCharacter.affiliation }}</p>
       <p><strong>Elemento:</strong> {{ selectedCharacter.element }}</p>
-      <p><strong>Vía:</strong> {{ selectedCharacter.path }}</p>
+      <p><strong>Arma:</strong> {{ selectedCharacter.weapon_type }}</p>
       <p><strong>Roles:</strong> {{ selectedCharacter.roles.join(', ') }}</p>
       <p><strong>Rareza:</strong> {{ selectedCharacter.rarity }}</p>
-      <p><strong>Versión de Origen:</strong> {{ selectedCharacter.relase_version || 'N/A' }}</p>
+      <p><strong>Versión de Origen:</strong> {{ selectedCharacter.release_version || 'N/A' }}</p>
+      <p><strong>Lugar de Nacimiento:</strong> {{ selectedCharacter.birthplace || 'N/A' }}</p>
       <p><strong>Lanzamiento:</strong> {{ selectedCharacter.release_date | date: 'yyyy-MM-dd' }}</p>
     </div>
 
@@ -72,4 +79,3 @@
     </div>
   </div>
 </div>
-
