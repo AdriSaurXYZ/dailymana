@@ -207,7 +207,8 @@ export class HomeMenuComponent implements OnInit {
     }
     this.http.patch('https://backend-production-a22a.up.railway.app/api/users/profile-photo', {
       email: this.user.email,
-      characterId: characterId
+      characterId: characterId,
+      game: 'hsr'  // 👈 añadido para distinguir el juego
     }).subscribe({
       next: () => {
         this.cargarPerfil();
@@ -219,6 +220,7 @@ export class HomeMenuComponent implements OnInit {
       }
     });
   }
+
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: MouseEvent) {
