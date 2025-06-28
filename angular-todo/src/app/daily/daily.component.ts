@@ -150,26 +150,31 @@ export class DiariasComponent implements OnInit {
       .filter(t => t.completed)
       .reduce((sum, task) => sum + task.points, 0);
 
-    // ⚡ Detectar si acaba de alcanzar los 500 puntos
+    // Detectar si acaba de alcanzar los 500 puntos
     if (this.progress >= 500 && previousProgress < 500 && !this.hasLogged500Today) {
       const userIdStr = localStorage.getItem('userId');
       const userId = userIdStr ? Number(userIdStr) : undefined;
 
       if (userId !== undefined) {
-        this.statsService.log500PointsDay(userId, 'hsr').subscribe({
-          next: () => {
-            this.hasLogged500Today = true;
-            console.log('✅ Día con 500 puntos registrado en la base de datos.');
-          },
-          error: (err) => {
-            console.error('❌ Error al registrar el día de 500 puntos:', err);
-          }
-        });
+        const today = new Date().toISOString().split('T')[0];
+        const logKey = `hsr_logged500_${userId}_${today}`;
+        const alreadyLogged = localStorage.getItem(logKey);
+
+        if (!alreadyLogged) {
+          this.statsService.log500PointsDay(userId, 'hsr').subscribe({
+            next: () => {
+              this.hasLogged500Today = true;
+              localStorage.setItem(logKey, 'true');
+              console.log('✅ Día con 500 puntos registrado en la base de datos.');
+            },
+            error: (err) => {
+              console.error('❌ Error al registrar el día de 500 puntos:', err);
+            }
+          });
+        }
       } else {
         console.error('No hay userId válido para registrar día 500 puntos.');
       }
-
-
     }
   }
 
