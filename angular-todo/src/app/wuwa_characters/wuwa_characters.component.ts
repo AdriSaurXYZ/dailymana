@@ -77,6 +77,8 @@ export class Wuwa_charactersComponent implements OnInit {
         this.affiliations = [...new Set(this.characters.map(c => c.affiliation).filter((a): a is string => a !== null))];
         this.roles = [...new Set(this.characters.flatMap(c => c.roles))];
         this.genders = [...new Set(this.characters.map(c => c.gender).filter((g): g is string => g !== null))];
+        this.birthplaces = [...new Set(this.characters.map(c => c.birthplace).filter((b): b is string => b !== null))];
+
 
         this.http.get<{ character_id: number; has_character: boolean; }[]>(
           `https://backend-production-a22a.up.railway.app/api/user-characters/${this.userId}`
