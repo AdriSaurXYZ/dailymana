@@ -1,13 +1,18 @@
-<h2 class="text-xl font-semibold mb-4">Días con 500+ puntos</h2>
-<p class="mb-4 font-bold">Total de veces alcanzadas: {{ totalCount }}</p>
+<div class="background-image"></div>
+<div class="starfield"></div>
 
-<ul class="space-y-2">
-  <li *ngFor="let day of days" class="p-2 bg-green-100 rounded">
-    {{ day.fecha }} - 500 puntos
-  </li>
-</ul>
+<div class="stats-container">
+  <h2 class="text-xl font-semibold mb-4">Días con 500+ puntos</h2>
+  <p class="mb-4 font-bold">Total de veces alcanzadas: {{ totalCount }}</p>
 
-<div class="navigation-buttons">
-  <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
-  <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+  <ul class="space-y-2">
+    <li *ngFor="let day of days" class="p-2 bg-green-100 rounded">
+      {{ day.fecha }} - 500 puntos
+    </li>
+  </ul>
+
+  <div class="navigation-buttons">
+    <button class="go-back-btn" (click)="goBack()">⬅️ Atrás</button>
+    <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
+  </div>
 </div>

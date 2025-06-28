@@ -4,12 +4,12 @@
 <div class="wuwa-task-background-image"></div>
 <div class="starfield"></div>
 
-<!-- Botón para controlar música -->
+<!-- Controles de audio -->
 <div class="audio-controls">
   <button class="music-toggle" (click)="toggleMusic()">
     {{ isPlaying ? '🔊' : '🔇' }}
   </button>
-  <button class="track-toggle" (click)="nextTrack()">🎵</button>
+  <button class="music-toggle" (click)="nextTrack()">🎵</button> <!-- CAMBIO AQUÍ -->
   <div class="volume-control">
     <input
       type="range"
