@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule, Location} from '@angular/common';
 import { StatsService } from '../services/stat.service';
 import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-stats',
+  selector: 'app-stats-hsr',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.css']
+  styleUrls: ['./stats.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class StatsComponent implements OnInit {
   days: { fecha: string }[] = [];

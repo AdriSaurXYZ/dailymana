@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule, Location} from '@angular/common';
 import { StatsService } from '../services/stat.service';
 import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-stats',
+  selector: 'app-stats-wuwa',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './wuwa_stats.component.html',
-  styleUrls: ['./wuwa_stats.component.css']
+  styleUrls: ['./wuwa_stats.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Wuwa_statsComponent implements OnInit {
   days: { fecha: string }[] = [];
