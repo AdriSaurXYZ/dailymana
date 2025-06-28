@@ -6,19 +6,19 @@ import {CommonModule, Location} from '@angular/common';
 interface Character {
   id: number;
   name: string;
-  gender: string;
+  gender: string | null;
+  birthplace: string | null;
+  weapon_type: string | null;
   profile_image_url: string;
-  path_icon_url: string;
-  element_icon_url: string;
   full_image_url: string;
   description: string;
-  affiliation: string;
-  path: string;
-  element: string;
-  roles: string[];
+  affiliation: string | null;
+  element: string | null;
+  element_icon_url: string;
   rarity: string;
-  relase_version: string;
-  release_date: string;
+  release_version: string | null;
+  release_date: string | null;
+  roles: string[];
   expanded?: boolean;
   owned?: boolean;
 }
@@ -59,7 +59,7 @@ export class Wuwa_charactersComponent implements OnInit {
 
 
   ngOnInit() {
-    this.http.get<Character[]>('https://backend-production-a22a.up.railway.app/api/characters')
+    this.http.get<Character[]>('https://backend-production-a22a.up.railway.app/wuwa-characters')
       .subscribe(characters => {
         this.characters = characters.map(c => ({
           ...c,
