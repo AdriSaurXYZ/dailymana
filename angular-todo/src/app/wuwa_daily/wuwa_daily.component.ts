@@ -193,8 +193,9 @@ export class Wuwa_diariasComponent implements OnInit {
 
   private getStorageKey(suffix: string): string | null {
     const email = this.getUserEmail();
-    return email ? `${suffix}_${email}` : null;
+    return email ? `wuwa_${suffix}_${email}` : null;
   }
+
 
   private saveClaimedMilestones(): void {
     const today = new Date().toISOString().split('T')[0];

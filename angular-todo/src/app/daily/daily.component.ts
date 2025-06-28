@@ -192,8 +192,9 @@ export class DiariasComponent implements OnInit {
 
   private getStorageKey(suffix: string): string | null {
     const email = this.getUserEmail();
-    return email ? `${suffix}_${email}` : null;
+    return email ? `hsr_${suffix}_${email}` : null;
   }
+
 
   private saveClaimedMilestones(): void {
     const today = new Date().toISOString().split('T')[0];
