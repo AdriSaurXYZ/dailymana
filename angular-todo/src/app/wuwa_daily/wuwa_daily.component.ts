@@ -85,16 +85,16 @@ export class Wuwa_diariasComponent implements OnInit {
 
   initializeTasks(): void {
     this.tasks = [
-      { name: 'Inicia sesión en el juego', progress: 0, goal: 1, completed: false, points: 100 },
-      { name: 'Consume 120 pts. de Poder trazacaminos', progress: 0, goal: 120, completed: false, points: 200 },
-      { name: 'Utiliza la máquina sintetizadora multiusos 1 vez', progress: 0, goal: 1, completed: false, points: 100 },
-      { name: 'Asigna 1 encargo', progress: 0, goal: 1, completed: false, points: 100 },
-      { name: 'Completa 1 misión diaria', progress: 0, goal: 1, completed: false, points: 200 },
-      { name: 'Derrota a 20 enemigos', progress: 0, goal: 20, completed: false, points: 100 },
-      { name: 'Gana 1 batalla utilizando personajes de apoyo', progress: 0, goal: 1, completed: false, points: 200 },
-      { name: 'Inflije ruptura de debilidad 5 veces', progress: 0, goal: 5, completed: false, points: 100 },
-      { name: 'Mejora cualquier artefacto una vez', progress: 0, goal: 1, completed: false, points: 100 },
-      { name: 'Completa el Universo Simulado 1 vez', progress: 0, goal: 1, completed: false, points: 500 },
+      { name: 'Recoge 3 nodos de ecos', progress: 0, goal: 3, completed: false, points: 100 },
+      { name: 'Derrota a un jefe semanal', progress: 0, goal: 1, completed: false, points: 200 },
+      { name: 'Explora una nueva área del mapa', progress: 0, goal: 1, completed: false, points: 100 },
+      { name: 'Completa una instancia de Torre Tacet', progress: 0, goal: 1, completed: false, points: 200 },
+      { name: 'Refina un eco en la estación de resonancia', progress: 0, goal: 1, completed: false, points: 100 },
+      { name: 'Recoge 10 materiales de recolección', progress: 0, goal: 10, completed: false, points: 100 },
+      { name: 'Realiza una misión secundaria', progress: 0, goal: 1, completed: false, points: 200 },
+      { name: 'Intercambia materiales en el mercado', progress: 0, goal: 1, completed: false, points: 100 },
+      { name: 'Mejora una habilidad de un personaje', progress: 0, goal: 1, completed: false, points: 100 },
+      { name: 'Completa una instancia cooperativa', progress: 0, goal: 1, completed: false, points: 500 },
     ];
 
     const completedTaskNames = this.loadTaskCompletion();
