@@ -56,7 +56,7 @@ export class Wuwa_homeMenuComponent implements OnInit {
   clickSound = new Audio('assets/click.mp3');
 
   cargarPerfil() {
-    this.http.get<any>(`https://backend-production-a22a.up.railway.app/api/users/profile?email=${this.user.email}`)
+    this.http.get<any>(`https://backend-production-a22a.up.railway.app/api/users/profile?email=${this.user.email}&game=wuwa`)
       .subscribe({
         next: (data) => {
           this.user.name = data.name;
@@ -207,7 +207,8 @@ export class Wuwa_homeMenuComponent implements OnInit {
     }
     this.http.patch('https://backend-production-a22a.up.railway.app/api/users/profile-photo', {
       email: this.user.email,
-      characterId: characterId
+      characterId: characterId,
+      game: 'wuwa'  // nuevo campo para distinguir
     }).subscribe({
       next: () => {
         this.cargarPerfil();
