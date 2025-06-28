@@ -79,7 +79,6 @@ export class Wuwa_charactersComponent implements OnInit {
         this.genders = [...new Set(this.characters.map(c => c.gender).filter((g): g is string => g !== null))];
         this.birthplaces = [...new Set(this.characters.map(c => c.birthplace).filter((b): b is string => b !== null))];
 
-
         this.http.get<{ character_id: number; has_character: boolean; }[]>(
           `https://backend-production-a22a.up.railway.app/api/user-characters/${this.userId}`
         ).subscribe(userChars => {
@@ -88,8 +87,12 @@ export class Wuwa_charactersComponent implements OnInit {
             if (match) match.owned = uc.has_character;
           });
         });
+
+        // 🚀 Forzar recarga del fondo visual
+        this.reloadBackground();
       });
   }
+
 
   get visibleCharacters(): Character[] {
     const total = this.filteredCharacters.length;
@@ -167,4 +170,17 @@ export class Wuwa_charactersComponent implements OnInit {
   goForward() {
     this.location.forward();
   }
+
+  reloadBackground() {
+    const bg = document.querySelector('.background-image') as HTMLElement;
+    if (bg) {
+      const original = bg.style.backgroundImage;
+      bg.style.backgroundImage = 'none';
+      // Forzamos el re-render aplicando de nuevo el fondo después de un breve retraso
+      setTimeout(() => {
+        bg.style.backgroundImage = original || "url('assets/jin.jpg')";
+      }, 50);
+    }
+  }
+
 }
