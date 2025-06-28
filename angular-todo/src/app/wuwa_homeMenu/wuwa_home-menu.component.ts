@@ -190,7 +190,7 @@ export class Wuwa_homeMenuComponent implements OnInit {
   togglePhotoSelector() {
     this.showPhotoSelector = !this.showPhotoSelector;
     if (this.showPhotoSelector && this.characters.length === 0) {
-      this.http.get('https://backend-production-a22a.up.railway.app/api/characters')
+      this.http.get('https://backend-production-a22a.up.railway.app/wuwa-characters')
         .subscribe({
           next: (data: any) => {
             this.characters = data;
