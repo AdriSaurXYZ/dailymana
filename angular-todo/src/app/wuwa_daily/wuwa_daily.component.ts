@@ -15,7 +15,7 @@ interface Task {
 }
 
 @Component({
-  selector: 'app-diarias',
+  selector: 'app-diarias-wuwa',
   standalone: true,
   imports: [CommonModule, MatSnackBarModule, ReactiveFormsModule, FormsModule],
   templateUrl: './wuwa_daily.component.html',

@@ -15,7 +15,7 @@ interface Task {
 }
 
 @Component({
-  selector: 'app-diarias',
+  selector: 'app-diarias-hsr',
   standalone: true,
   imports: [CommonModule, MatSnackBarModule, ReactiveFormsModule, FormsModule],
   templateUrl: './daily.component.html',
