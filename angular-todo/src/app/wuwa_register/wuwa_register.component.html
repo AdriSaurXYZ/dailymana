@@ -1,5 +1,4 @@
 <div class="page-container register-wuwa-background">
-  <!-- Fondo estrellado -->
   <div class="stars"></div>
   <div class="stars2"></div>
   <div class="stars3"></div>
@@ -11,14 +10,7 @@
     </button>
     <button class="music-toggle" (click)="nextTrack()">🎵</button>
     <div class="volume-control">
-      <input
-        type="range"
-        min="0"
-        max="1"
-        step="0.01"
-        [(ngModel)]="volume"
-        (input)="adjustVolume()"
-      />
+      <input type="range" min="0" max="1" step="0.01" [(ngModel)]="volume" (input)="adjustVolume()" />
     </div>
   </div>
 
@@ -27,21 +19,21 @@
     <button class="go-forward-btn" (click)="goForward()">➡️ Adelante</button>
   </div>
 
-  <!-- Formulario de registro -->
   <div class="register-container">
     <h2>Registrarse</h2>
     <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" novalidate>
+
       <!-- Nombre -->
       <label for="name">Nombre de Usuario:</label>
       <input
         type="text"
         id="name"
-        [(ngModel)]="name"
         name="name"
+        [(ngModel)]="name"
         required
         autocomplete="off"
       />
-      <div *ngIf="registerForm.submitted && registerForm.controls['name']?.invalid" style="color: red; font-size: 0.9rem;">
+      <div *ngIf="registerForm.submitted && registerForm.controls['name']?.invalid" style="color: red;">
         ⚠️ El nombre es obligatorio.
       </div>
 
@@ -50,14 +42,13 @@
       <input
         type="email"
         id="email"
-        [(ngModel)]="email"
         name="email"
+        [(ngModel)]="email"
         required
         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-        title="Por favor, introduce un correo electrónico válido"
         autocomplete="off"
       />
-      <div *ngIf="registerForm.submitted && registerForm.controls['email']?.invalid" style="color: red; font-size: 0.9rem;">
+      <div *ngIf="registerForm.submitted && registerForm.controls['email']?.invalid" style="color: red;">
         <span *ngIf="registerForm.controls['email']?.errors?.['required']">⚠️ El correo es obligatorio.</span>
         <span *ngIf="registerForm.controls['email']?.errors?.['pattern']">⚠️ El formato del correo no es válido.</span>
       </div>
@@ -74,7 +65,7 @@
         autocomplete="off"
       />
 
-      <!-- Barra de seguridad y mensaje -->
+      <!-- Barra fuerza -->
       <div class="password-strength-container" *ngIf="password">
         <div class="strength-bar">
           <div
@@ -85,20 +76,16 @@
             }"
           ></div>
         </div>
-        <div
-          class="strength-text"
-          [ngStyle]="{ color: passwordStrengthColor }"
-        >
+        <div class="strength-text" [ngStyle]="{ color: passwordStrengthColor }">
           {{ passwordStrengthMessage }}
         </div>
       </div>
 
-      <!-- Advertencia si la contraseña no es fuerte -->
-      <div *ngIf="password && !isPasswordStrong" style="color: red; font-size: 0.9rem; margin-bottom: 10px;">
+      <div *ngIf="password && !isPasswordStrong" style="color: red;">
         ⚠️ La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.
       </div>
 
-      <!-- Botón registrar -->
+      <!-- Botón -->
       <button type="submit" class="register-button" [disabled]="!registerForm.valid || !isPasswordStrong">
         Registrarse
       </button>

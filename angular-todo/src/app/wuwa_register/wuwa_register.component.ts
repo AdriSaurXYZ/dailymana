@@ -67,8 +67,6 @@ export class Wuwa_registerComponent implements OnInit {
   }
 
   checkPasswordStrength(): void {
-    console.log('Verificando fuerza de contraseña...', this.password);  // <-- DEBUG
-
     const pwd = this.password;
 
     const lengthRequirement = /.{8,}/;
@@ -115,14 +113,11 @@ export class Wuwa_registerComponent implements OnInit {
     this.router.navigate(['/wuwa-login']);
   }
 
-  nextTrack(): void {
-    this.musicService.nextTrack();
-  }
-
-  goBack() {
+  goBack(): void {
     this.location.back();
   }
-  goForward() {
+
+  goForward(): void {
     this.location.forward();
   }
 }
