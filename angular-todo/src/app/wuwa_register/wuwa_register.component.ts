@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MusicService } from '../services/music.service';
-import {Location, NgStyle} from '@angular/common';
+import { Location, NgIf, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   templateUrl: './wuwa_register.component.html',
   styleUrls: ['./wuwa_register.component.css'],
-  imports: [FormsModule, NgStyle]
+  imports: [FormsModule, NgIf, NgStyle]
 })
 export class Wuwa_registerComponent implements OnInit {
   name = '';
@@ -66,8 +66,9 @@ export class Wuwa_registerComponent implements OnInit {
     });
   }
 
-
   checkPasswordStrength(): void {
+    console.log('Verificando fuerza de contraseña...', this.password);  // <-- DEBUG
+
     const pwd = this.password;
 
     const lengthRequirement = /.{8,}/;
@@ -100,7 +101,6 @@ export class Wuwa_registerComponent implements OnInit {
       this.passwordStrengthColor = 'limegreen';
     }
   }
-
 
   toggleMusic(): void {
     this.musicService.toggle();
