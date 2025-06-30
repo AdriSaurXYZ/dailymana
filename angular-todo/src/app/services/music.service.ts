@@ -11,6 +11,7 @@ export class MusicService {
   private tracks: string[] = [
     'assets/space-station.mp3',
     'assets/hope.mp3',
+    'assets/waw.mp3',
   ];
   private currentTrackIndex = 0;
 
