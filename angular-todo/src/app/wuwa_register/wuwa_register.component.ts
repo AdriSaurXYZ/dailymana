@@ -54,7 +54,7 @@ export class Wuwa_registerComponent implements OnInit {
     this.apiService.registerUser(userData).subscribe({
       next: () => {
         alert('Registro exitoso');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/wuwa-login']);
       },
       error: (err) => {
         if (err.status === 409) {
@@ -112,7 +112,7 @@ export class Wuwa_registerComponent implements OnInit {
   }
 
   goToLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/wuwa-login']);
   }
 
   nextTrack(): void {
