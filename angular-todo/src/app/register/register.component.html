@@ -31,28 +31,42 @@
   <div class="register-container">
     <h2>Registrarse</h2>
     <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" novalidate>
+
+      <!-- Nombre -->
       <label for="name">Nombre de Usuario:</label>
       <input
         type="text"
         id="name"
-        [(ngModel)]="name"
         name="name"
+        [(ngModel)]="name"
+        #nameRef="ngModel"
         required
         autocomplete="off"
       />
+      <div *ngIf="(nameRef.invalid && (nameRef.dirty || nameRef.touched || registerForm.submitted))" style="color: red;">
+        ⚠️ El nombre es obligatorio.
+      </div>
 
+      <!-- Correo -->
       <label for="email">Correo electrónico:</label>
       <input
         type="email"
         id="email"
-        [(ngModel)]="email"
         name="email"
+        [(ngModel)]="email"
+        #emailRef="ngModel"
         required
         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-        title="Por favor, introduce un correo electrónico válido"
         autocomplete="off"
       />
 
+      <div *ngIf="(emailRef.invalid && (emailRef.dirty || emailRef.touched || registerForm.submitted))" style="color: red;">
+        <span *ngIf="emailRef.errors?.['required']">⚠️ El correo es obligatorio.</span>
+        <span *ngIf="emailRef.errors?.['email'] || emailRef.errors?.['pattern']">⚠️ El formato del correo no es válido.</span>
+      </div>
+
+
+      <!-- Contraseña -->
       <label for="password">Contraseña:</label>
       <input
         type="password"
@@ -62,9 +76,10 @@
         required
         (input)="checkPasswordStrength()"
         autocomplete="off"
+        #passwordRef="ngModel"
       />
 
-      <!-- Barra de seguridad y mensaje -->
+      <!-- Barra fuerza -->
       <div class="password-strength-container" *ngIf="password">
         <div class="strength-bar">
           <div
@@ -75,20 +90,19 @@
             }"
           ></div>
         </div>
-        <div
-          class="strength-text"
-          [ngStyle]="{ color: passwordStrengthColor }"
-        >
+        <div class="strength-text" [ngStyle]="{ color: passwordStrengthColor }">
           {{ passwordStrengthMessage }}
         </div>
       </div>
 
-      <!-- Advertencia si la contraseña no es fuerte -->
-      <div *ngIf="password && !isPasswordStrong" style="color: red; font-size: 0.9rem; margin-bottom: 10px;">
+      <div *ngIf="password && !isPasswordStrong" style="color: red;">
         ⚠️ La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.
       </div>
 
-      <button type="submit" class="register-button" [disabled]="!registerForm.valid || !isPasswordStrong">Registrarse</button>
+      <!-- Botón -->
+      <button type="submit" class="register-button" [disabled]="!registerForm.valid || !isPasswordStrong">
+        Registrarse
+      </button>
     </form>
 
     <p>¿Ya tienes una cuenta?</p>

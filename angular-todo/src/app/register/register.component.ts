@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MusicService } from '../services/music.service';
-import {Location, NgStyle} from '@angular/common';
+import {Location, NgIf, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  imports: [FormsModule, NgStyle]
+  imports: [FormsModule, NgStyle, NgIf]
 })
 export class RegisterComponent implements OnInit {
   name = '';
@@ -66,7 +66,6 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-
   checkPasswordStrength(): void {
     const pwd = this.password;
 
@@ -101,7 +100,6 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-
   toggleMusic(): void {
     this.musicService.toggle();
     this.isPlaying = this.musicService.isPlaying;
@@ -119,10 +117,12 @@ export class RegisterComponent implements OnInit {
     this.musicService.nextTrack();
   }
 
-  goBack() {
+
+  goBack(): void {
     this.location.back();
   }
-  goForward() {
+
+  goForward(): void {
     this.location.forward();
   }
 }
