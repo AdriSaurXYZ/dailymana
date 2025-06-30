@@ -47,12 +47,15 @@
         [(ngModel)]="email"
         #emailRef="ngModel"
         required
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         autocomplete="off"
       />
+
       <div *ngIf="(emailRef.invalid && (emailRef.dirty || emailRef.touched || registerForm.submitted))" style="color: red;">
         <span *ngIf="emailRef.errors?.['required']">⚠️ El correo es obligatorio.</span>
-        <span *ngIf="emailRef.errors?.['email']">⚠️ El formato del correo no es válido.</span>
+        <span *ngIf="emailRef.errors?.['email'] || emailRef.errors?.['pattern']">⚠️ El formato del correo no es válido.</span>
       </div>
+
 
       <!-- Contraseña -->
       <label for="password">Contraseña:</label>
