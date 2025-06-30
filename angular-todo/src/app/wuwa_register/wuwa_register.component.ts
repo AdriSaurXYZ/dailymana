@@ -113,6 +113,11 @@ export class Wuwa_registerComponent implements OnInit {
     this.router.navigate(['/wuwa-login']);
   }
 
+  nextTrack(): void {
+    this.musicService.nextTrack();
+  }
+
+
   goBack(): void {
     this.location.back();
   }
